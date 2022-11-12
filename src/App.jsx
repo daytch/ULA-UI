@@ -5,6 +5,7 @@ import Loader from "./components/Loader";
 const Login = lazy(() => import("./pages/login.jsx"));
 const Tracking = lazy(() => import("./pages/tracking.jsx"));
 const Notfound = lazy(() => import("./pages/notfound.jsx"));
+const Dashboard = lazy(() => import("./pages/admin/dashboard.jsx"));
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/notfound" element={<Notfound />} />
         <Route path="/tracking" element={<Tracking />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         {/* <Route exact path="/faq" component={Faq} />
         <Route exact path="/atm" component={ATM} /> */}
         {/* <PrivateRoute exact path="/dashboard" component={Dashboard} />

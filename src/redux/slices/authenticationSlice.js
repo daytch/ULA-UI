@@ -7,7 +7,7 @@ export const authenticationSlice = createSlice({
     loading: false,
     error: "",
     message: "",
-    session: "",
+    token: "",
   },
   reducers: {
     postCaptcha: (state) => {
@@ -27,7 +27,7 @@ export const authenticationSlice = createSlice({
     },
     postLoginSuccess: (state, action) => {
       state.data = action.payload.data;
-      state.session = action.payload.data.Session;
+      state.token = action.payload.data.token;
       state.loading = false;
     },
     postLoginFailure: (state, action) => {

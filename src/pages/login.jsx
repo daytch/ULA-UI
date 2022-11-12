@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { getImageUrl } from "./../functions";
 import LogoImage from "./../assets/logo.png";
+import { postLogin } from "./../redux/slices/authenticationSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
-  const handleLogin = () => {};
+  const dispatch = useDispatch();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  function handleLogin(e) {
+    e.preventDefault();
+
+    dispatch(postLogin());
+  }
+
+  const token = useSelector((state) => state.Authentication.token);
+  const data = useSelector((state) => state.Authentication.data);
+
+  useEffect(() => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userData", data);
+    if (token && data) {
+      window.location.href = "/dashboard";
+    }
+  }, [token]);
+
   return (
     <div
       className="bg-cover bg-center w-screen h-screen grid place-items-center"
@@ -19,65 +41,62 @@ const Login = () => {
             <p>Pemkot Bitung</p>
           </div>
         </div>
-        <form onSubmit={handleLogin}>
-          <div className="grid gap-y-4 p-5">
-            <div>
-              <div className="relative">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                  required
-                  placeholder="Email"
-                  aria-describedby="email-error"
-                />
-                {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+        <form className="grid gap-y-4 p-5" method="POST" onSubmit={handleLogin}>
+          <div>
+            <div className="relative">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                required
+                placeholder="Email"
+                ref={emailRef}
+                // aria-describedby="email-error"
+              />
+              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                     <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                     </svg>
                   </div> */}
-              </div>
-              <p className="hidden text-xs text-red-600 mt-2" id="email-error">
-                Please include a valid email address so we can get back to you
-              </p>
             </div>
-            {/* <!-- End Form Group --> */}
-
-            {/* <!-- Form Group --> */}
-            <div>
-              <div className="relative">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
-                  required
-                  placeholder="Password"
-                  aria-describedby="password-error"
-                />
-                {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
-              </div>
-              <p
-                className="hidden text-xs text-red-600 mt-2"
-                id="password-error"
-              >
-                8+ characters required
-              </p>
-            </div>
-            {/* <!-- End Form Group --> */}
-
-            <button
-              type="submit"
-              className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            >
-              Login
-            </button>
+            <p className="hidden text-xs text-red-600 mt-2" id="email-error">
+              Please include a valid email address so we can get back to you
+            </p>
           </div>
+          {/* <!-- End Form Group --> */}
+
+          {/* <!-- Form Group --> */}
+          <div>
+            <div className="relative">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+                required
+                ref={passwordRef}
+                placeholder="Password"
+                // aria-describedby="password-error"
+              />
+              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                    </svg>
+                  </div> */}
+            </div>
+            <p className="hidden text-xs text-red-600 mt-2" id="password-error">
+              8+ characters required
+            </p>
+          </div>
+          {/* <!-- End Form Group --> */}
+
+          <button
+            type="submit"
+            className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>

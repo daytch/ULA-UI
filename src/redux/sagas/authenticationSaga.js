@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
-import { URL } from "../../constants/index";
+import { URL } from "./../constants";
 
-import { POST } from "middleware/index";
+import { POST } from "./../middleware/index";
 import {
   postLoginFailure,
   postLoginSuccess,
@@ -12,9 +12,9 @@ import {
 export function* postLogin(action) {
   try {
     const data = action.payload;
-    const res = yield call(POST, URL.LOGIN, data);
+    // const res = yield call(POST, URL.LOGIN, data);
 
-    if (res.ErrorCode > 0) {
+    if (/*res.ErrorCode > 0*/ false) {
       yield put(
         postLoginFailure({
           isError: 1,
@@ -22,8 +22,12 @@ export function* postLogin(action) {
         })
       );
     } else {
-      
-      yield put(postLoginSuccess({ data: res.Data }));
+      let d = {
+        token: "xxxxxxxx",
+        username: "daytch",
+        email: "van.daytch@gmail.com",
+      };
+      yield put(postLoginSuccess({ data: d }));
     }
   } catch (error) {
     yield put(postLoginFailure({ isError: 1, message: error }));

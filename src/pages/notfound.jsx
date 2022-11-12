@@ -4,7 +4,7 @@ import LogoImage from "./../assets/logo.png";
 const Notfound = () => {
   return (
     <div className="mt-[10vh] max-w-[50rem] flex flex-col m-auto w-full h-full justify-center items-center">
-      <div class="mx-auto text-center">
+      <div className="mx-auto text-center">
         {/* <!-- ========== HEADER ========== --> */}
         <header className="mb-auto flex justify-center z-50 w-full py-4">
           <nav className="px-4 sm:px-6 lg:px-8" aria-label="Global">
@@ -70,8 +70,8 @@ const Notfound = () => {
                 <path
                   d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
               Back to examples

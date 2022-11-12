@@ -15,17 +15,17 @@ const Tracking = () => {
           <div className="w-3/5 mx-auto justify-self-center header-card flex flex-col justify-center items-center font-medium text-xl mb-8 border-b-2 border-white">
             <div className="mt-8 mb-3">
               
-              <div class="relative flex rounded-md shadow-sm">
+              <div className="relative flex rounded-md shadow-sm">
                 <input
                   type="text"
                   id="hs-search-box-with-loading-5"
                   name="hs-search-box-with-loading-5"
-                  class="py-3 px-4 pl-11 block w-full border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                  className="py-3 px-4 pl-11 block w-full border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                   placeholder="No Surat"
                 />
-                <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4">
                   <svg
-                    class="h-4 w-4 text-gray-400"
+                    className="h-4 w-4 text-gray-400"
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
