@@ -12,7 +12,7 @@ const Loader = (props) => {
         height="80"
         width="80"
         ariaLabel="dna-loading"
-        wrapperClass="z-20 dna-wrapper"
+        wrapperclassName="z-20 dna-wrapper"
       />
     </div>
   ) : null;

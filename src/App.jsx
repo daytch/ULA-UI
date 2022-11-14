@@ -2,10 +2,10 @@ import React, { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Loader from "./components/Loader";
 
-const Login = lazy(() => import("./pages/login.jsx"));
-const Tracking = lazy(() => import("./pages/tracking.jsx"));
-const Notfound = lazy(() => import("./pages/notfound.jsx"));
-const Dashboard = lazy(() => import("./pages/admin/dashboard.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const Tracking = lazy(() => import("./pages/Tracking.jsx"));
+const Notfound = lazy(() => import("./pages/NotFound.jsx"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard.jsx"));
 
 function App() {
   return (
