@@ -60,10 +60,7 @@ const Dashboard = () => {
                   <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                     Surat Masuk
                   </h5>
-                  <p className="text-gray-700 text-base mb-4">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
+                  <p className="text-gray-700 text-7xl mb-4">28776</p>
                 </div>
               </div>
             </div>
@@ -73,10 +70,7 @@ const Dashboard = () => {
                   <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                     Surat di proses
                   </h5>
-                  <p className="text-gray-700 text-base mb-4">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
+                  <p className="text-gray-700 text-7xl mb-4">34256</p>
                 </div>
               </div>
             </div>
@@ -86,10 +80,7 @@ const Dashboard = () => {
                   <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                     Surat dibalas
                   </h5>
-                  <p className="text-gray-700 text-base mb-4">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
+                  <p className="text-gray-700 text-7xl mb-4">54356</p>
                 </div>
               </div>
             </div>

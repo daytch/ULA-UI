@@ -337,6 +337,5 @@ export function useQuery() {
 }
 
 export function getImageUrl(name) {
-  debugger;
   return new URL(`./${name}`, import.meta.url).href;
 }

@@ -3,6 +3,8 @@ import { getImageUrl } from "./../functions";
 import LogoImage from "./../assets/logo.png";
 import { postLogin } from "./../redux/slices/authenticationSlice.js";
 import { useDispatch, useSelector } from "react-redux";
+import { history } from "../helpers/history.js";
+import { isObjectEmpty } from "../functions/index.js";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -17,14 +19,22 @@ const Login = () => {
 
   const token = useSelector((state) => state.Authentication.token);
   const data = useSelector((state) => state.Authentication.data);
-
+  const lsData = JSON.parse(localStorage.getItem('userData'));
+  
   useEffect(() => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("userData", data);
-    if (token && data) {
-      window.location.href = "/dashboard";
+    
+    if (!isObjectEmpty(lsData)) {
+      history.navigate("/dashboard");
     }
-  }, [token]);
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify(data));
+      if (token && data) {
+        // window.location.href = "/dashboard";
+        history.navigate("/dashboard");
+      }
+    }
+  }, [token, data]);
 
   return (
     <div

@@ -8,12 +8,13 @@ import {
   postCaptchaSuccess,
   postCaptchaFailure,
 } from "../slices/authenticationSlice";
+import { history } from "../../helpers/history";
 
 export function* postLogin(action) {
   try {
     const data = action.payload;
     // const res = yield call(POST, URL.LOGIN, data);
-
+    
     if (/*res.ErrorCode > 0*/ false) {
       yield put(
         postLoginFailure({
@@ -28,6 +29,8 @@ export function* postLogin(action) {
         email: "van.daytch@gmail.com",
       };
       yield put(postLoginSuccess({ data: d }));
+      const { from } = history.location.state || { from: { pathname: "/" } };
+      // history.navigate(from);
     }
   } catch (error) {
     yield put(postLoginFailure({ isError: 1, message: error }));
