@@ -24,14 +24,13 @@ const Login = () => {
   useEffect(() => {
     
     if (!isObjectEmpty(lsData)) {
-      history.navigate("/dashboard");
+      history.navigate("/");
     }
     if (token) {
       localStorage.setItem("token", token);
       localStorage.setItem("userData", JSON.stringify(data));
       if (token && data) {
-        // window.location.href = "/dashboard";
-        history.navigate("/dashboard");
+        history.navigate("/");
       }
     }
   }, [token, data]);
@@ -41,12 +40,12 @@ const Login = () => {
       className="bg-cover bg-center w-screen h-screen grid place-items-center"
       style={{ backgroundImage: "url(/bg-full.jpeg)" }}
     >
-      <div className="w-1/3 h-3/5 bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
+      <div className="lg:w-1/3 lg:h-[45%] bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
         <div className="flex flex-col justify-items-center">
           <section className="grid justify-items-center mb-3">
             <img src={LogoImage} className="w-28 h-auto text-center" />
           </section>
-          <div className="header-card flex flex-col justify-center items-center font-medium text-xl mb-8">
+          <div className="header-card flex flex-col justify-center items-center font-medium text-xl">
             <p>Layanan Surat</p>
             <p>Pemkot Bitung</p>
           </div>

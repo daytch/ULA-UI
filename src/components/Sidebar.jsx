@@ -4,8 +4,71 @@ import InputSurat from "./../assets/icons8-edit.png";
 import SuratMasuk from "./../assets/inbox.png";
 import SuratKeluar from "./../assets/outbox.png";
 import Laporan from "./../assets/analytics.png";
+import { useDispatch, useSelector } from "react-redux";
+import { changeActiveSidebarMenu } from "../redux/slices/dashboardSlice.js";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
+
+  const menuAction = {
+    dashboard: () => {
+      dispatch(
+        changeActiveSidebarMenu({
+          dashboard: true,
+          input: false,
+          masuk: false,
+          keluar: false,
+          laporan: false,
+        })
+      );
+    },
+    input: () => {
+      dispatch(
+        changeActiveSidebarMenu({
+          dashboard: false,
+          input: true,
+          masuk: false,
+          keluar: false,
+          laporan: false,
+        })
+      );
+    },
+    masuk: () => {
+      dispatch(
+        changeActiveSidebarMenu({
+          dashboard: false,
+          input: false,
+          masuk: true,
+          keluar: false,
+          laporan: false,
+        })
+      );
+    },
+    keluar: () => {
+      dispatch(
+        changeActiveSidebarMenu({
+          dashboard: false,
+          input: false,
+          masuk: false,
+          keluar: true,
+          laporan: false,
+        })
+      );
+    },
+    laporan: () => {
+      dispatch(
+        changeActiveSidebarMenu({
+          dashboard: false,
+          input: false,
+          masuk: false,
+          keluar: false,
+          laporan: true,
+        })
+      );
+    },
+  };
+
   return (
     <>
       {/* <!-- Sidebar Toggle --> */}
@@ -93,9 +156,14 @@ const Sidebar = () => {
         >
           <ul className="space-y-1.5">
             <li>
-              <a
-                className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-900 dark:text-white"
-                href="#"
+              <div
+                className={
+                  "hs-accordion-toggle cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
+                  (isActive.dashboard
+                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
+                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
+                }
+                onClick={() => menuAction["dashboard"]()}
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -115,47 +183,67 @@ const Sidebar = () => {
                   />
                 </svg>
                 Dashboard
-              </a>
+              </div>
             </li>
 
             <li className="hs-accordion" id="users-accordion">
-              <a
-                className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="#"
+              <div
+                className={
+                  "hs-accordion-toggle cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
+                  (isActive.inputsurat
+                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
+                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
+                }
+                onClick={() => menuAction["input"]()}
               >
                 <img src={InputSurat} className="w-[16px] h-[16px]" />
                 Input Surat
-              </a>
+              </div>
             </li>
 
             <li className="hs-accordion" id="account-accordion">
-              <a
-                className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="#"
+              <div
+                className={
+                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
+                  (isActive.masuk
+                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
+                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
+                }
+                onClick={() => menuAction["masuk"]()}
               >
                 <img src={SuratMasuk} className="w-[16px] h-[16px]" />
                 Surat Masuk
-              </a>
+              </div>
             </li>
 
             <li className="hs-accordion" id="projects-accordion">
-              <a
-                className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="#"
+              <div
+                className={
+                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
+                  (isActive.keluar
+                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
+                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
+                }
+                onClick={() => menuAction["keluar"]()}
               >
                 <img src={SuratKeluar} className="w-[16px] h-[16px]" />
                 Surat Keluar
-              </a>
+              </div>
             </li>
 
             <li>
-              <a
-                className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
-                href="#"
+              <div
+                className={
+                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
+                  (isActive.laporan
+                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
+                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
+                }
+                onClick={() => menuAction["laporan"]()}
               >
                 <img src={Laporan} className="w-[16px] h-[16px]" />
                 Laporan
-              </a>
+              </div>
             </li>
           </ul>
         </nav>

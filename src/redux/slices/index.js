@@ -1,12 +1,10 @@
 import { combineReducers } from "redux";
 import authenticationReducer from "./authenticationSlice";
-// import voucherReducer from "./voucherSlice";
-// import userReducer from "./userSlice";
+import dashboardReducer from "./";
 
 const appReducer = combineReducers({
   authenticationReducer,
-  // voucherReducer,
-  // userReducer,
+  dashboardReducer,
 });
 
 const rootReducer = (state, action) => {
