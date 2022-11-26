@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Dashboard from "./Dashboard";
 import Input from "./InputSurat";
 import SuratKeluar from "./SuratKeluar";
+import SuratMasuk from "./SuratMasuk";
 
 const Admin = () => {
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
@@ -16,6 +17,8 @@ const Admin = () => {
       <Input />
     ) : isActive.keluar ? (
       <SuratKeluar />
+    ) : isActive.masuk ? (
+      <SuratMasuk />
     ) : null;
   };
 

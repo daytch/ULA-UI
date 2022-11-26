@@ -10,6 +10,10 @@ import { changeActiveSidebarMenu } from "../redux/slices/dashboardSlice.js";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
+  const activeClass =
+    "flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-900 dark:text-white";
+  const inActiveClass =
+    "cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300";
 
   const menuAction = {
     dashboard: () => {
@@ -157,12 +161,7 @@ const Sidebar = () => {
           <ul className="space-y-1.5">
             <li>
               <div
-                className={
-                  "hs-accordion-toggle cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
-                  (isActive.dashboard
-                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
-                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
-                }
+                className={isActive.dashboard ? activeClass : inActiveClass}
                 onClick={() => menuAction["dashboard"]()}
               >
                 <svg
@@ -188,12 +187,7 @@ const Sidebar = () => {
 
             <li className="hs-accordion" id="users-accordion">
               <div
-                className={
-                  "hs-accordion-toggle cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
-                  (isActive.inputsurat
-                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
-                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
-                }
+                className={isActive.inputsurat ? activeClass : inActiveClass}
                 onClick={() => menuAction["input"]()}
               >
                 <img src={InputSurat} className="w-[16px] h-[16px]" />
@@ -203,12 +197,7 @@ const Sidebar = () => {
 
             <li className="hs-accordion" id="account-accordion">
               <div
-                className={
-                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
-                  (isActive.masuk
-                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
-                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
-                }
+                className={isActive.masuk ? activeClass : inActiveClass}
                 onClick={() => menuAction["masuk"]()}
               >
                 <img src={SuratMasuk} className="w-[16px] h-[16px]" />
@@ -218,12 +207,7 @@ const Sidebar = () => {
 
             <li className="hs-accordion" id="projects-accordion">
               <div
-                className={
-                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
-                  (isActive.keluar
-                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
-                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
-                }
+                className={isActive.keluar ? activeClass : inActiveClass}
                 onClick={() => menuAction["keluar"]()}
               >
                 <img src={SuratKeluar} className="w-[16px] h-[16px]" />
@@ -233,12 +217,7 @@ const Sidebar = () => {
 
             <li>
               <div
-                className={
-                  "cursor-pointer hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md dark:bg-gray-800 dark:text-slate-400 dark:hs-accordion-active:text-white" +
-                  (isActive.laporan
-                    ? "dark:bg-gray-900 bg-gray-100 dark:text-slate-300"
-                    : "dark:hover:bg-gray-900 hover:bg-gray-100 dark:hover:text-slate-300")
-                }
+                className={isActive.laporan ? activeClass : inActiveClass}
                 onClick={() => menuAction["laporan"]()}
               >
                 <img src={Laporan} className="w-[16px] h-[16px]" />

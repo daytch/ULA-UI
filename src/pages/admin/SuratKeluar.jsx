@@ -3,6 +3,7 @@ import React from "react";
 const SuratKeluar = () => {
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6]">
+    <p className="text-xl font-light my-4">Surat <span className="font-bold">Keluar</span></p>
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
@@ -37,7 +38,7 @@ const SuratKeluar = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
                   >
-                    NIK
+                    Tanggal Keluar
                   </th>
                   <th
                     scope="col"
@@ -50,85 +51,69 @@ const SuratKeluar = () => {
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                    John Brown
+                    003/ULA/26112022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    45
+                    Sekda Bitung
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    New York No. 1 Lake Park
+                    Peminjaman Ruang Meeting
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    Fauzi
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    26/11/2022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a className="text-blue-500 hover:text-blue-700" href="#">
-                      Delete
+                      View
                     </a>
                   </td>
                 </tr>
 
                 <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                    Jim Green
+                    002/ULA/25112022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    27
+                    Wakil Walikota Bitung
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    London No. 1 Lake Park
+                    Peminjaman Ruang Aula
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    Dayat
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    25/11/2022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a className="text-blue-500 hover:text-blue-700" href="#">
-                      Delete
+                      View
                     </a>
                   </td>
                 </tr>
 
                 <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                    Joe Black
+                    001/ULA/24112022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    31
+                    Walikota Bitung
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    Sidney No. 1 Lake Park
+                    Peminjaman Ruang Aula
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    Victor
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    24/11/2022
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a className="text-blue-500 hover:text-blue-700" href="#">
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-
-                <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                    Edward King
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    16
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    LA No. 1 Lake Park
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a className="text-blue-500 hover:text-blue-700" href="#">
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-
-                <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                    Jim Red
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    45
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    Melbourne No. 1 Lake Park
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a className="text-blue-500 hover:text-blue-700" href="#">
-                      Delete
+                      View
                     </a>
                   </td>
                 </tr>
