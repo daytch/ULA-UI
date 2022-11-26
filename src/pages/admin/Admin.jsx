@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 import Input from "./InputSurat";
 import SuratKeluar from "./SuratKeluar";
 import SuratMasuk from "./SuratMasuk";
+import Laporan from "./Laporan";
 
 const Admin = () => {
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
@@ -19,6 +20,8 @@ const Admin = () => {
       <SuratKeluar />
     ) : isActive.masuk ? (
       <SuratMasuk />
+    ) : isActive.laporan ? (
+      <Laporan />
     ) : null;
   };
 

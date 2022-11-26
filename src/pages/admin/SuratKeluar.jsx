@@ -1,11 +1,16 @@
 import React from "react";
+import SearchBox from "../../components/SearchBar";
+import Pager from "../../components/Pager";
 
 const SuratKeluar = () => {
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6]">
-    <p className="text-xl font-light my-4">Surat <span className="font-bold">Keluar</span></p>
+      <p className="text-xl font-light my-4">
+        Surat <span className="font-bold">Keluar</span>
+      </p>
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
+          <SearchBox />
           <div className="overflow-hidden">
             <table className="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
@@ -60,7 +65,7 @@ const SuratKeluar = () => {
                     Peminjaman Ruang Meeting
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    Fauzi
+                    Andi
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     26/11/2022
@@ -83,7 +88,7 @@ const SuratKeluar = () => {
                     Peminjaman Ruang Aula
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    Dayat
+                    Budi
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     25/11/2022
@@ -106,7 +111,7 @@ const SuratKeluar = () => {
                     Peminjaman Ruang Aula
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                    Victor
+                    Candra
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     24/11/2022
@@ -119,6 +124,7 @@ const SuratKeluar = () => {
                 </tr>
               </tbody>
             </table>
+            <Pager />
           </div>
         </div>
       </div>
