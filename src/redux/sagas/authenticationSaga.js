@@ -13,9 +13,9 @@ import { history } from "../../helpers/history";
 export function* postLogin(action) {
   try {
     const data = action.payload;
-    // const res = yield call(POST, URL.LOGIN, data);
-    
-    if (/*res.ErrorCode > 0*/ false) {
+    const res = yield call(POST, URL.LOGIN, data);
+    debugger;
+    if (res) {
       yield put(
         postLoginFailure({
           isError: 1,
