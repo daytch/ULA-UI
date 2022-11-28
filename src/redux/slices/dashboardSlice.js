@@ -10,15 +10,19 @@ export const dashboardSlice = createSlice({
       keluar: false,
       laporan: false,
     },
+    loading: false,
   },
   reducers: {
     changeActiveSidebarMenu: (state, action) => {
-      
       state.activeSidebarMenu = action.payload;
+    },
+    toogleLoading: (state, action) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { changeActiveSidebarMenu } = dashboardSlice.actions;
+export const { changeActiveSidebarMenu, toogleLoading } =
+  dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

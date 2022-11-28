@@ -6,25 +6,15 @@ let api = axios.create({
   timeout: 10000,
   headers: {
     "Access-Control-Allow-Origin": "*",
-    // "content-type": "application/json",
+    "Content-Type": "application/json;charset=utf-8",
   },
 });
 
-api.interceptors.request.use(
-  async function (config) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.common['x-access-token'] = token;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  },
-);
+api.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
 
 api.interceptors.response.use(
   function (response) {
+    debugger;
     if (response.data.ErrorCode === 400) {
       localStorage.clear();
       window.location.href = "/login";
@@ -36,4 +26,5 @@ api.interceptors.response.use(
   }
 );
 
+export { default as setAuthorizationHeader } from "./setAuthorizationHeader.js";
 export default api;

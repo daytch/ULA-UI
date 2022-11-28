@@ -7,7 +7,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import { history } from "./helpers/history.js";
-import Loader from "./components/Loader";
 
 import { PrivateRoute } from "./PrivateRoute";
 import Login from "./pages/Login.jsx";

@@ -1,10 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import { getImageUrl } from "./../functions";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  getImageUrl,
+  isObjectEmpty,
+  validateEmail,
+  validasiNomorSeluler,
+} from "./../functions";
 import LogoImage from "./../assets/logo.png";
 import { postLogin } from "./../redux/slices/authenticationSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../helpers/history.js";
-import { isObjectEmpty } from "../functions/index.js";
+import Axios from "axios";
+import { nikParser } from "nik-parser";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -14,30 +20,82 @@ const Create = () => {
   const emailRef = useRef();
   const tujuanRef = useRef();
   const judulRef = useRef();
+  const [url, setUrl] = useState("");
+  const [error, setError] = useState({
+    nik: false,
+    nama: false,
+    hp: false,
+    email: false,
+    tujuan: false,
+    judul: false,
+    lampiran: false,
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("error:", error);
+  }, [error]);
 
   function handleLogin(e) {
     e.preventDefault();
+    let pl = {
+      nik: nikRef.current.value,
+      nama: namaRef.current.value,
+      no_hp: phoneRef.current.value,
+      email: emailRef.current.value,
+      tujuan: tujuanRef.current.value,
+      judul: tujuanRef.current.value,
+      lampiran: url ? url.split("/").pop() : url,
+      status: "A",
+    };
+    let err = error;
+    err.nik = !nikParser(pl.nik).isValid();
+    err.nama = !pl.nama;
+    err.hp = !validasiNomorSeluler(pl.no_hp);
+    err.email = !validateEmail(pl.email);
+    err.tujuan = !pl.tujuan;
+    err.judul = !pl.judul;
+    err.lampiran = !pl.lampiran;
 
-    dispatch(postLogin());
+    if (
+      !err.nik &&
+      !err.nama &&
+      !err.hp &&
+      !err.email &&
+      !err.tujuan &&
+      !err.judul &&
+      !err.lampiran
+    ) {
+      debugger;
+      dispatch(postSubmitSurat({ data: pl }));
+    } else {
+      setError({ ...error, err });
+    }
   }
 
-  const token = useSelector((state) => state.Authentication.token);
-  const data = useSelector((state) => state.Authentication.data);
-  const lsData = JSON.parse(localStorage.getItem("userData"));
+  const changeUploadFile = async (e) => {
+    dispatch(toogleLoading(true));
+    e.preventDefault();
+    const formData = new FormData();
+    const image = e.target.files[0];
+    if (image.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      formData.append("file", image);
+      formData.append("upload_preset", "pemkot_bitung");
 
-  useEffect(() => {
-    if (!isObjectEmpty(lsData)) {
-      history.navigate("/");
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/daytch/image/upload",
+        formData
+      ).then((res) => {
+        setUrl(res.data["secure_url"]);
+        dispatch(toogleLoading(false));
+      });
+    } else {
+      let er = error;
+      er.lampiran = true;
+      setError(er);
+      dispatch(toogleLoading(false));
     }
-    if (token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("userData", JSON.stringify(data));
-      if (token && data) {
-        // window.location.href = "/";
-        history.navigate("/");
-      }
-    }
-  }, [token, data]);
+  };
 
   return (
     <div
@@ -62,17 +120,27 @@ const Create = () => {
                 required
                 placeholder="Silahkan input Nama"
                 ref={namaRef}
-                // aria-describedby="email-error"
               />
-              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
+              {error.nama ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
-            <p className="hidden text-xs text-red-600 mt-2" id="email-error">
-              Please include a valid email address so we can get back to you
-            </p>
+            {error.nama ? (
+              <p className="flex text-xs text-red-600 mt-2" id="nama-error">
+                Nama pengirim wajib diisi.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -85,17 +153,27 @@ const Create = () => {
                 required
                 ref={nikRef}
                 placeholder="Silahkan input NIK"
-                // aria-describedby="password-error"
               />
-              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
+              {error.nik ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
-            <p className="hidden text-xs text-red-600 mt-2" id="password-error">
-              8+ characters required
-            </p>
+            {error.nik ? (
+              <p className="flex text-xs text-red-600 mt-2" id="nik-error">
+                NIK tidak valid.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -108,17 +186,60 @@ const Create = () => {
                 required
                 ref={phoneRef}
                 placeholder="Silahkan input No HP (aktif WA)"
-                // aria-describedby="password-error"
               />
-              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
+              {error.hp ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
-            <p className="hidden text-xs text-red-600 mt-2" id="password-error">
-              8+ characters required
-            </p>
+            {error.hp ? (
+              <p className="flex text-xs text-red-600 mt-2" id="phone-error">
+                No Hp tidak valid.
+              </p>
+            ) : null}
+          </div>
+
+          <div>
+            <div className="relative">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                required
+                ref={emailRef}
+                placeholder="Silahkan input Email"
+              />
+              {error.email ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
+            </div>
+            {error.email ? (
+              <p className="flex text-xs text-red-600 mt-2" id="email-error">
+                Email tidak valid.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -131,17 +252,27 @@ const Create = () => {
                 required
                 ref={tujuanRef}
                 placeholder="Silahkan input Tujuan Surat"
-                // aria-describedby="password-error"
               />
-              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
+              {error.tujuan ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
-            <p className="hidden text-xs text-red-600 mt-2" id="password-error">
-              8+ characters required
-            </p>
+            {error.tujuan ? (
+              <p className="flex text-xs text-red-600 mt-2" id="tujuan-error">
+                Tujuan surat wajib diisi.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -154,17 +285,27 @@ const Create = () => {
                 required
                 ref={judulRef}
                 placeholder="Silahkan input Judul Surat"
-                // aria-describedby="password-error"
               />
-              {/* <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                    <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                    </svg>
-                  </div> */}
+              {error.judul ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
-            <p className="hidden text-xs text-red-600 mt-2" id="password-error">
-              8+ characters required
-            </p>
+            {error.judul ? (
+              <p className="flex text-xs text-red-600 mt-2" id="judul-error">
+                Judul surat wajib diisi.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -173,16 +314,35 @@ const Create = () => {
                 Choose file
               </label>
               <input
+                onChange={changeUploadFile}
                 type="file"
                 name="small-file-input"
                 id="small-file-input"
-                className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400
-    file:bg-transparent file:border-0
-    file:bg-gray-100 file:mr-4
-    file:py-2 file:px-4
-    dark:file:bg-gray-700 dark:file:text-gray-400"
+                className="bg-white block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-2 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
               />
+              {error.lampiran ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                  <svg
+                    className="h-5 w-5 text-red-500"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                  </svg>
+                </div>
+              ) : null}
             </div>
+            {error.lampiran ? (
+              <p
+                className="flex text-xs text-red-600 mt-2"
+                id="small-file-input-error"
+              >
+                Lampiran wajib diisi dengan file gambar.
+              </p>
+            ) : null}
           </div>
 
           <button
