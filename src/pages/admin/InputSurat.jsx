@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getImageUrl, isObjectEmpty } from "./../../functions";
+import {
+  getImageUrl,
+  isObjectEmpty,
+  validateEmail,
+  validasiNomorSeluler,
+} from "./../../functions";
 import LogoImage from "../../assets/logo.png";
-import { postLogin } from "./../../redux/slices/authenticationSlice.js";
+import { postSubmitSurat } from "./../../redux/slices/suratSlice.js";
+import { toogleLoading } from "./../../redux/slices/dashboardSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../helpers/history.js";
 import Axios from "axios";
@@ -17,61 +23,80 @@ const InputSurat = () => {
   const judulRef = useRef();
   const [url, setUrl] = useState("");
   const [error, setError] = useState({
-    nik: !false,
-    nama: !false,
-    hp: !false,
-    email: !false,
-    tujuan: !false,
-    judul: !false,
-    lampiran: !false,
+    nik: false,
+    nama: false,
+    hp: false,
+    email: false,
+    tujuan: false,
+    judul: false,
+    lampiran: false,
   });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("error:", error);
+  }, [error]);
 
   function handleLogin(e) {
     e.preventDefault();
     let pl = {
-      nik: "3071236239",
-      nama: "Fauzi",
-      no_hp: "089635781185",
-      email: "njicker@gmail.com",
-      tujuan: "Peminjaman Ruangan",
-      judul: "Acara Bersih Kota",
-      lampiran: "inilampiran.zip",
+      nik: nikRef.current.value,
+      nama: namaRef.current.value,
+      no_hp: phoneRef.current.value,
+      email: emailRef.current.value,
+      tujuan: tujuanRef.current.value,
+      judul: tujuanRef.current.value,
+      lampiran: url ? url.split("/").pop() : url,
       status: "A",
     };
-    dispatch(postLogin());
+    let err = error;
+    err.nik = !nikParser(pl.nik).isValid();
+    err.nama = !pl.nama;
+    err.hp = !validasiNomorSeluler(pl.no_hp);
+    err.email = !validateEmail(pl.email);
+    err.tujuan = !pl.tujuan;
+    err.judul = !pl.judul;
+    err.lampiran = !pl.lampiran;
+
+    if (
+      !err.nik &&
+      !err.nama &&
+      !err.hp &&
+      !err.email &&
+      !err.tujuan &&
+      !err.judul &&
+      !err.lampiran
+    ) {
+      debugger;
+      dispatch(postSubmitSurat({ data: pl }));
+    } else {
+      setError({ ...error, err });
+    }
   }
 
-  const changeUploadFile = (e) => {
+  const changeUploadFile = async (e) => {
+    dispatch(toogleLoading(true));
     e.preventDefault();
     const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    formData.append("upload_preset", "pemkot_bitung");
+    const image = e.target.files[0];
+    if (image.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      formData.append("file", image);
+      formData.append("upload_preset", "pemkot_bitung");
 
-    Axios.post(
-      "https://api.cloudinary.com/v1_1/daytch/image/upload",
-      formData
-    ).then((res) => {
-      setUrl(res.data["secure_url"]);
-    });
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/daytch/image/upload",
+        formData
+      ).then((res) => {
+        setUrl(res.data["secure_url"]);
+        dispatch(toogleLoading(false));
+      });
+    } else {
+      let er = error;
+      er.lampiran = true;
+      setError(er);
+      dispatch(toogleLoading(false));
+    }
   };
-
-  const token = useSelector((state) => state.Authentication.token);
-  const data = useSelector((state) => state.Authentication.data);
-  const lsData = JSON.parse(localStorage.getItem("userData"));
-
-  useEffect(() => {
-    if (!isObjectEmpty(lsData)) {
-      history.navigate("/");
-    }
-    if (token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("userData", JSON.stringify(data));
-      if (token && data) {
-        // window.location.href = "/";
-        history.navigate("/");
-      }
-    }
-  }, [token, data]);
 
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] lg:w-1/2">
@@ -143,7 +168,7 @@ const InputSurat = () => {
           </div>
           {error.nik ? (
             <p className="flex text-xs text-red-600 mt-2" id="nik-error">
-              NIK kosong / tidak valid, mohon cek kembali NIK anda.
+              NIK tidak valid.
             </p>
           ) : null}
         </div>
@@ -176,7 +201,40 @@ const InputSurat = () => {
           </div>
           {error.hp ? (
             <p className="flex text-xs text-red-600 mt-2" id="phone-error">
-              No Hp wajib diisi.
+              No Hp tidak valid.
+            </p>
+          ) : null}
+        </div>
+
+        <div>
+          <div className="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+              required
+              ref={emailRef}
+              placeholder="Silahkan input Email"
+            />
+            {error.email ? (
+              <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                <svg
+                  className="h-5 w-5 text-red-500"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+              </div>
+            ) : null}
+          </div>
+          {error.email ? (
+            <p className="flex text-xs text-red-600 mt-2" id="email-error">
+              Email tidak valid.
             </p>
           ) : null}
         </div>
@@ -275,8 +333,11 @@ const InputSurat = () => {
             ) : null}
           </div>
           {error.lampiran ? (
-            <p className="flex text-xs text-red-600 mt-2" id="small-file-input-error">
-              Lampiran wajib diisi.
+            <p
+              className="flex text-xs text-red-600 mt-2"
+              id="small-file-input-error"
+            >
+              Lampiran wajib diisi dengan file gambar.
             </p>
           ) : null}
         </div>
