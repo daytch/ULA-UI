@@ -14,8 +14,8 @@ export function* postLogin(action) {
   try {
     const data = action.payload;
     const res = yield call(POST, URL.LOGIN, data);
-    debugger;
-    if (res) {
+
+    if (res.message !== "User Found") {
       yield put(
         postLoginFailure({
           isError: 1,
@@ -24,13 +24,11 @@ export function* postLogin(action) {
       );
     } else {
       let d = {
-        token: "xxxxxxxx",
-        username: "daytch",
-        email: "van.daytch@gmail.com",
+        token: res.token,
+        email: data.username,
       };
       yield put(postLoginSuccess({ data: d }));
       const { from } = history.location.state || { from: { pathname: "/" } };
-      // history.navigate(from);
     }
   } catch (error) {
     yield put(postLoginFailure({ isError: 1, message: error }));

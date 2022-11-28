@@ -1,10 +1,8 @@
 import api from "./api";
 
-export function POST(url, body, user) {
+export function POST(url, body) {
   try {
-    return user
-      ? api.post(url, body) //, { withCredentials: true })
-      : api.post(url, body);
+    return api.post(url, body);
   } catch (error) {
     return { error: error };
   }

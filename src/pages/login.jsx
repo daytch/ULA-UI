@@ -14,7 +14,12 @@ const Login = () => {
   function handleLogin(e) {
     e.preventDefault();
 
-    dispatch(postLogin());
+    dispatch(
+      postLogin({
+        username: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
+    );
   }
 
   const token = useSelector((state) => state.Authentication.token);
@@ -60,7 +65,6 @@ const Login = () => {
                 required
                 placeholder="Email"
                 ref={emailRef}
-                value="me@nurulhidayat.com"
               />
             </div>
           </div>
@@ -77,7 +81,6 @@ const Login = () => {
                 required
                 ref={passwordRef}
                 placeholder="Password"
-                value="Test@123"
               />
             </div>
           </div>
