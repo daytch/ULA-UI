@@ -66,7 +66,7 @@ const Create = () => {
       !err.judul &&
       !err.lampiran
     ) {
-      debugger;
+      
       dispatch(postSubmitSurat({ data: pl }));
     } else {
       setError({ ...error, err });
@@ -102,7 +102,7 @@ const Create = () => {
       className="bg-cover bg-center w-screen h-screen grid place-items-center"
       style={{ backgroundImage: "url(/bg-full.jpeg)" }}
     >
-      <div className="lg:w-1/3 lg:h-3/5 bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
+      <div className="lg:w-1/3 lg:h-[37rem] bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
         <div className="flex flex-row justify-center items-center border-b-[1px] border-black">
           <img src={LogoImage} className="w-20 h-auto inline" />
           <p className="header-card font-medium text-xl ml-4">

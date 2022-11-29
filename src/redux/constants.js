@@ -6,6 +6,7 @@ export const URL = {
   DASHBOARD: "/dashboard",
   GET_INBOX: "/suratmasuk",
   POST_MAIL: "/submitsurat",
+  ACTION_MAIL: "/actionsurat",
   GET_OUTBOX: "/suratkeluar",
   TRACKING: "/trackingpage",
 };

@@ -187,7 +187,7 @@ const Sidebar = () => {
 
             <li className="hs-accordion" id="users-accordion">
               <div
-                className={isActive.inputsurat ? activeClass : inActiveClass}
+                className={isActive.input ? activeClass : inActiveClass}
                 onClick={() => menuAction["input"]()}
               >
                 <img src={InputSurat} className="w-[16px] h-[16px]" />

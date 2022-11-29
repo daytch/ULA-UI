@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { OS } from "../functions/index.js";
 
-const SearchBox = () => {
+const SearchBox = (props) => {
+  const { filteringData } = props;
   const searchRef = useRef();
   const handleUserKeyPress = useCallback((event) => {
     const { key, keyCode } = event;
@@ -25,6 +26,7 @@ const SearchBox = () => {
         </label>
         <input
           ref={searchRef}
+          onChange={filteringData}
           type="text"
           name="hs-table-search"
           id="hs-table-search"

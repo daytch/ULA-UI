@@ -4,6 +4,8 @@ export const suratSlice = createSlice({
   name: "Surat",
   initialState: {
     data: {},
+    inbox: [],
+    outbox: [],
     loading: false,
     error: "",
     message: "",
@@ -22,6 +24,45 @@ export const suratSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+
+    postActionSurat: (state) => {
+      state.loading = true;
+    },
+    postActionSuratSuccess: (state, action) => {
+      state.data = action.payload.data;
+      state.message = action.payload.message;
+      state.loading = false;
+    },
+    postActionSuratFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
+    getInbox: (state) => {
+      state.loading = true;
+    },
+    getInboxSuccess: (state, action) => {
+      state.inbox = action.payload.res;
+      state.message = action.payload.message;
+      state.loading = false;
+    },
+    getInboxFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
+    getOutboxSurat: (state) => {
+      state.loading = true;
+    },
+    getOutboxSuccess: (state, action) => {
+      state.outbox = action.payload.data;
+      state.message = action.payload.message;
+      state.loading = false;
+    },
+    getOutboxFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
   },
 });
 
@@ -29,6 +70,15 @@ export const {
   postSubmitSurat,
   postSubmitSuratFailure,
   postSubmitSuratSuccess,
+  postActionSurat,
+  postActionSuratFailure,
+  postActionSuratSuccess,
+  getInbox,
+  getInboxSuccess,
+  getInboxFailure,
+  getOutbox,
+  getOutboxSuccess,
+  getOutboxFailure,
 } = suratSlice.actions;
 
 export default suratSlice.reducer;

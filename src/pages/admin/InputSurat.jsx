@@ -38,6 +38,8 @@ const InputSurat = () => {
   }, [error]);
 
   function handleLogin(e) {
+    
+    dispatch(toogleLoading(true));
     e.preventDefault();
     let pl = {
       nik: nikRef.current.value,
@@ -45,8 +47,8 @@ const InputSurat = () => {
       no_hp: phoneRef.current.value,
       email: emailRef.current.value,
       tujuan: tujuanRef.current.value,
-      judul: tujuanRef.current.value,
-      lampiran: url ? url.split("/").pop() : url,
+      judul: judulRef.current.value,
+      lampiran: url, // ? url.split("/").pop() : url,
       status: "A",
     };
     let err = error;
@@ -67,11 +69,11 @@ const InputSurat = () => {
       !err.judul &&
       !err.lampiran
     ) {
-      debugger;
       dispatch(postSubmitSurat({ data: pl }));
     } else {
       setError({ ...error, err });
     }
+    dispatch(toogleLoading(false));
   }
 
   const changeUploadFile = async (e) => {
@@ -106,6 +108,7 @@ const InputSurat = () => {
           Layanan Surat Pemkot Bitung
         </p>
       </div>
+      
       <form className="grid gap-y-4 p-5" method="POST" onSubmit={handleLogin}>
         <div>
           <div className="relative">

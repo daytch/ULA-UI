@@ -14,7 +14,7 @@ api.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
 
 api.interceptors.response.use(
   function (response) {
-    debugger;
+    
     if (response.data.ErrorCode === 400) {
       localStorage.clear();
       window.location.href = "/login";
