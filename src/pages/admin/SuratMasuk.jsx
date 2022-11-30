@@ -339,9 +339,12 @@ const SuratMasuk = () => {
                     </label>
                     <select
                       ref={kepadaRef}
-                      class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      value="0"
+                      className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                     >
-                      <option selected>Please Select</option>
+                      <option value="0">
+                        Please Select
+                      </option>
                       <option value="B1">Admin Walikota</option>
                       <option value="B2">Admin Wakil Walikota</option>
                       <option value="B3">Admin Sekot</option>
@@ -377,7 +380,7 @@ const SuratMasuk = () => {
                 Close
               </button>
               <a
-                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                 href="#"
                 onClick={handlePostAction}
               >
@@ -404,7 +407,7 @@ const SuratMasuk = () => {
       "https://wa.me/" +
         detail.no_hp +
         "/?text=" +
-        wording.tracking +  
+        wording.tracking +
         "" +
         detail.id,
       "_blank"

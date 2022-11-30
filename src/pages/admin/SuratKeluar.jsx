@@ -240,7 +240,7 @@ const SuratKeluar = () => {
 
   const handlePostAction = () => {
     dispatch(toogleLoading(true));
-    debugger;
+    
     let payload = {
       id: Number(detail.id), // id surat
       destination: kepadaRef.current.value, // Admin Walikota

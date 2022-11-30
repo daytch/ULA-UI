@@ -10,7 +10,7 @@ import { postSubmitSurat } from "./../../redux/slices/suratSlice.js";
 import { toogleLoading } from "./../../redux/slices/dashboardSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../helpers/history.js";
-import Axios from "axios";
+import api from '../../redux/middleware/api.js'
 import { nikParser } from "nik-parser";
 
 const InputSurat = () => {
@@ -85,7 +85,7 @@ const InputSurat = () => {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
-      await Axios.post(
+      await api.post(
         "https://api.cloudinary.com/v1_1/daytch/image/upload",
         formData
       ).then((res) => {

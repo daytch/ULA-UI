@@ -42,7 +42,7 @@ export const suratSlice = createSlice({
       state.loading = true;
     },
     getInboxSuccess: (state, action) => {
-      debugger
+      
       state.inbox = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
