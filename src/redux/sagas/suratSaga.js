@@ -75,7 +75,7 @@ export function* getInbox() {
 
 export function* getOutbox() {
   try {
-    const res = yield call(POST, URL.GET_OUTBOX);
+    const res = yield call(GET, URL.GET_OUTBOX);
 
     if (!res) {
       yield put(
@@ -85,7 +85,7 @@ export function* getOutbox() {
         })
       );
     } else {
-      yield put(getInboxSuccess({ res }));
+      yield put(getOutboxSuccess({ res }));
     }
   } catch (error) {
     yield put(getOutboxFailure({ isError: 1, message: error }));

@@ -42,6 +42,7 @@ export const suratSlice = createSlice({
       state.loading = true;
     },
     getInboxSuccess: (state, action) => {
+      debugger
       state.inbox = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
@@ -51,11 +52,11 @@ export const suratSlice = createSlice({
       state.error = action.payload.message;
     },
 
-    getOutboxSurat: (state) => {
+    getOutbox: (state) => {
       state.loading = true;
     },
     getOutboxSuccess: (state, action) => {
-      state.outbox = action.payload.data;
+      state.outbox = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
     },

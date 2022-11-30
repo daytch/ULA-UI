@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import SearchBox from "../../components/SearchBar";
-import Pager from "../../components/Pager";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce, convertDate } from "../../functions/index.js";
 import { getInbox, postActionSurat } from "../../redux/slices/suratSlice.js";
 import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
+import wording from "../../assets/wording.json";
 
 let PageSize = 10;
 
@@ -254,7 +254,7 @@ const SuratMasuk = () => {
               <button
                 type="button"
                 className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
-                data-hs-overlay="#hs-vertically-centered-scrollable-modal"
+                data-hs-overlay="#modal-forward"
               >
                 <span className="sr-only">Close</span>
                 <svg
@@ -392,14 +392,23 @@ const SuratMasuk = () => {
 
   const handlePostAction = () => {
     dispatch(toogleLoading(true));
-    debugger;
-    let payload = {
-      id: Number(detail.id), // id surat
-      destination: kepadaRef.current.value, // Admin Walikota
-      keterangan: keteranganRef.current.value,
-    };
-    dispatch(postActionSurat(payload));
+
+    // let payload = {
+    //   id: Number(detail.id), // id surat
+    //   destination: kepadaRef.current.value, // Admin Walikota
+    //   keterangan: keteranganRef.current.value,
+    // };
+    // dispatch(postActionSurat(payload));
     dispatch(toogleLoading(false));
+    window.open(
+      "https://wa.me/" +
+        detail.no_hp +
+        "/?text=" +
+        wording.tracking +  
+        "" +
+        detail.id,
+      "_blank"
+    );
   };
 
   return (

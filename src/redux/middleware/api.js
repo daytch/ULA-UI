@@ -11,10 +11,21 @@ let api = axios.create({
 });
 
 api.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+// api.interceptors.request.use(
+//   function (config) {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//       config.headers.common["x-access-token"] = token;
+//     }
+//     return config;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
 
 api.interceptors.response.use(
   function (response) {
-    
     if (response.data.ErrorCode === 400) {
       localStorage.clear();
       window.location.href = "/login";
@@ -22,6 +33,11 @@ api.interceptors.response.use(
     return response.data;
   },
   function (error) {
+    debugger;
+    if (error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );

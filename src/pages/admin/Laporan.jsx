@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBox from "../../components/SearchBar";
-import Pager from "../../components/Pager";
+// import Pager from "../../components/Pager";
 
 const Laporan = () => {
   return (
@@ -149,7 +149,7 @@ const Laporan = () => {
                 </tr>
               </tbody>
             </table>
-            <Pager />
+            {/* <Pager /> */}
           </div>
         </div>
       </div>
