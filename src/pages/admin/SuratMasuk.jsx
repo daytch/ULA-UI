@@ -393,12 +393,12 @@ const SuratMasuk = () => {
   const handlePostAction = () => {
     dispatch(toogleLoading(true));
 
-    // let payload = {
-    //   id: Number(detail.id), // id surat
-    //   destination: kepadaRef.current.value, // Admin Walikota
-    //   keterangan: keteranganRef.current.value,
-    // };
-    // dispatch(postActionSurat(payload));
+    let payload = {
+      id: Number(detail.id), // id surat
+      destination: kepadaRef.current.value, // Admin Walikota
+      keterangan: keteranganRef.current.value,
+    };
+    dispatch(postActionSurat(payload));
     dispatch(toogleLoading(false));
     window.open(
       "https://wa.me/" +
