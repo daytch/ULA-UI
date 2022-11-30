@@ -40,6 +40,38 @@ export function dateToString(date) {
   return new Date(date).getFullYear() + "-" + month + "-" + day;
 }
 
+export function datetimeToString(date) {
+  // return date.toISOString().split('T')[0]
+  let month =
+    (new Date(date).getMonth() + 1).toString().length < 2
+      ? "0" + (new Date(date).getMonth() + 1)
+      : new Date(date).getMonth() + 1;
+
+  let day =
+    new Date(date).getDate().toString().length < 2
+      ? "0" + new Date(date).getDate()
+      : new Date(date).getDate();
+
+  let hour =
+    new Date(date).getHours().toString().length < 2
+      ? "0" + new Date(date).getHours()
+      : new Date(date).getHours();
+  let minutes =
+    new Date(date).getMinutes().toString().length < 2
+      ? "0" + new Date(date).getMinutes()
+      : new Date(date).getMinutes();
+  return (
+    new Date(date).getFullYear() +
+    "-" +
+    month +
+    "-" +
+    day +
+    " " +
+    hour +
+    ":" +
+    minutes
+  );
+}
 export function formatDate(value) {
   // let date = new Date(value)
   // const day = date.toString('default', { day: '2-digit' })

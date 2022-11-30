@@ -11,6 +11,8 @@ import {
   getInboxSuccess,
   getOutboxSuccess,
   getOutboxFailure,
+  getTrackingSuccess,
+  getTrackingFailure,
 } from "../slices/suratSlice";
 import { history } from "../../helpers/history";
 
@@ -92,11 +94,31 @@ export function* getOutbox() {
   }
 }
 
+export function* getTracking(action) {
+  try {
+    const res = yield call(GET, URL.TRACKING + "?no_surat=" + action.payload);
+
+    if (!res) {
+      yield put(
+        getTrackingFailure({
+          isError: 1,
+          message: res.ErrorMessage,
+        })
+      );
+    } else {
+      yield put(getTrackingSuccess({ res }));
+    }
+  } catch (error) {
+    yield put(getTrackingFailure({ isError: 1, message: error }));
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery("Surat/postSubmitSurat", postSubmitSurat),
     takeEvery("Surat/postActionSurat", postActionSurat),
     takeEvery("Surat/getInbox", getInbox),
     takeEvery("Surat/getOutbox", getOutbox),
+    takeEvery("Surat/getTracking", getTracking),
   ]);
 }

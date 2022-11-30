@@ -21,7 +21,7 @@ function App() {
   // anywhere in the react app (inside or outside components)
   history.navigate = useNavigate();
   history.location = useLocation();
-  console.log("history:", history);
+  // console.log("history:", history);
   return (
     <Routes>
       <Route

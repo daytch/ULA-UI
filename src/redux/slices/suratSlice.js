@@ -6,6 +6,7 @@ export const suratSlice = createSlice({
     data: {},
     inbox: [],
     outbox: [],
+    tracking: [],
     loading: false,
     error: "",
     message: "",
@@ -38,11 +39,23 @@ export const suratSlice = createSlice({
       state.error = action.payload.message;
     },
 
+    getTracking: (state) => {
+      state.loading = true;
+    },
+    getTrackingSuccess: (state, action) => {
+      state.tracking = action.payload.res;
+      state.message = action.payload.message;
+      state.loading = false;
+    },
+    getTrackingFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
     getInbox: (state) => {
       state.loading = true;
     },
     getInboxSuccess: (state, action) => {
-      
       state.inbox = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
@@ -80,6 +93,9 @@ export const {
   getOutbox,
   getOutboxSuccess,
   getOutboxFailure,
+  getTracking,
+  getTrackingSuccess,
+  getTrackingFailure,
 } = suratSlice.actions;
 
 export default suratSlice.reducer;

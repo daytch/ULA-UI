@@ -15,6 +15,7 @@ export const dashboardSlice = createSlice({
         }
       : activeMenu,
     loading: false,
+    data: {},
   },
   reducers: {
     changeActiveSidebarMenu: (state, action) => {
@@ -24,10 +25,28 @@ export const dashboardSlice = createSlice({
     toogleLoading: (state, action) => {
       state.loading = action.payload;
     },
+
+    getData: (state) => {
+      state.loading = true;
+    },
+    getDataSuccess: (state, action) => {
+      state.data = action.payload.res;
+      state.message = action.payload.message;
+      state.loading = false;
+    },
+    getDataFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
   },
 });
 
-export const { changeActiveSidebarMenu, toogleLoading } =
-  dashboardSlice.actions;
+export const {
+  changeActiveSidebarMenu,
+  toogleLoading,
+  getData,
+  getDataSuccess,
+  getDataFailure,
+} = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;
