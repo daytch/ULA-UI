@@ -10,8 +10,12 @@ import { postSubmitSurat } from "./../../redux/slices/suratSlice.js";
 import { toogleLoading } from "./../../redux/slices/dashboardSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../helpers/history.js";
-import api from '../../redux/middleware/api.js'
+import axios from "axios";
 import { nikParser } from "nik-parser";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const InputSurat = () => {
   const dispatch = useDispatch();
@@ -21,6 +25,7 @@ const InputSurat = () => {
   const emailRef = useRef();
   const tujuanRef = useRef();
   const judulRef = useRef();
+  const formRef = useRef();
   const [url, setUrl] = useState("");
   const [error, setError] = useState({
     nik: false,
@@ -31,15 +36,27 @@ const InputSurat = () => {
     judul: false,
     lampiran: false,
   });
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("error:", error);
   }, [error]);
 
+  const loading = useSelector((state) => state.Surat.loading);
+  const message = useSelector((state) => state.Surat.message);
+
+  useEffect(() => {
+    dispatch(toogleLoading(loading));
+    if (message)
+      MySwal.fire({
+        title: <strong>Success!</strong>,
+        html: message,
+        icon: "success",
+      }).then(() => {
+        formRef.current.reset();
+      });
+  }, [loading, message]);
+
   function handleLogin(e) {
-    
-    dispatch(toogleLoading(true));
     e.preventDefault();
     let pl = {
       nik: nikRef.current.value,
@@ -81,17 +98,16 @@ const InputSurat = () => {
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-    if (image.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
-      await api.post(
-        "https://api.cloudinary.com/v1_1/daytch/image/upload",
-        formData
-      ).then((res) => {
-        setUrl(res.data["secure_url"]);
-        dispatch(toogleLoading(false));
-      });
+      await axios
+        .post("https://api.cloudinary.com/v1_1/daytch/image/upload", formData)
+        .then((res) => {
+          setUrl(res.data["secure_url"]);
+          dispatch(toogleLoading(false));
+        });
     } else {
       let er = error;
       er.lampiran = true;
@@ -108,8 +124,13 @@ const InputSurat = () => {
           Layanan Surat Pemkot Bitung
         </p>
       </div>
-      
-      <form className="grid gap-y-4 p-5" method="POST" onSubmit={handleLogin}>
+
+      <form
+        className="grid gap-y-4 p-5"
+        method="POST"
+        ref={formRef}
+        onSubmit={handleLogin}
+      >
         <div>
           <div className="relative">
             <input

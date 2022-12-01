@@ -11,6 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../helpers/history.js";
 import Axios from "axios";
 import { nikParser } from "nik-parser";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -20,6 +24,7 @@ const Create = () => {
   const emailRef = useRef();
   const tujuanRef = useRef();
   const judulRef = useRef();
+  const formRef = useRef();
   const [url, setUrl] = useState("");
   const [error, setError] = useState({
     nik: false,
@@ -30,7 +35,20 @@ const Create = () => {
     judul: false,
     lampiran: false,
   });
-  const [loading, setLoading] = useState(false);
+
+  const loading = useSelector((state) => state.Surat.loading);
+  const message = useSelector((state) => state.Surat.message);
+
+  useEffect(() => {
+    if (message)
+      MySwal.fire({
+        title: <strong>Success!</strong>,
+        html: message,
+        icon: "success",
+      }).then(() => {
+        formRef.current.reset();
+      });
+  }, [loading, message]);
 
   useEffect(() => {
     console.log("error:", error);
@@ -66,7 +84,6 @@ const Create = () => {
       !err.judul &&
       !err.lampiran
     ) {
-      
       dispatch(postSubmitSurat({ data: pl }));
     } else {
       setError({ ...error, err });
@@ -78,7 +95,7 @@ const Create = () => {
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-    if (image.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
@@ -109,7 +126,12 @@ const Create = () => {
             Layanan Surat Pemkot Bitung
           </p>
         </div>
-        <form className="grid gap-y-4 p-5" method="POST" onSubmit={handleLogin}>
+        <form
+          className="grid gap-y-4 p-5"
+          method="POST"
+          ref={formRef}
+          onSubmit={handleLogin}
+        >
           <div>
             <div className="relative">
               <input

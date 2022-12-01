@@ -15,15 +15,17 @@ export const suratSlice = createSlice({
   reducers: {
     postSubmitSurat: (state) => {
       state.loading = true;
+      state.message = "";
     },
     postSubmitSuratSuccess: (state, action) => {
       state.data = action.payload.data;
-      state.message = action.payload.message;
+      state.message = "Data berhasil di save";
       state.loading = false;
     },
     postSubmitSuratFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
+      state.message = "";
     },
 
     postActionSurat: (state) => {

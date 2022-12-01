@@ -27,6 +27,9 @@ export function* postLogin(action) {
         token: res.token,
         email: data.username,
       };
+      localStorage.setItem("token", d.token);
+      localStorage.setItem("userData", JSON.stringify(d));
+      debugger;
       yield put(postLoginSuccess({ data: d }));
       const { from } = history.location.state || { from: { pathname: "/" } };
     }
