@@ -9,4 +9,5 @@ export const URL = {
   ACTION_MAIL: "/actionsurat",
   GET_OUTBOX: "/suratkeluar",
   TRACKING: "/trackingpage",
+  LAPORAN: "/laporan",
 };

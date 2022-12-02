@@ -13,6 +13,8 @@ import {
   getOutboxFailure,
   getTrackingSuccess,
   getTrackingFailure,
+  getReportSuccess,
+  getReportFailure,
 } from "../slices/suratSlice";
 import { history } from "../../helpers/history";
 
@@ -113,6 +115,25 @@ export function* getTracking(action) {
   }
 }
 
+export function* getReport() {
+  try {
+    const res = yield call(GET, URL.LAPORAN);
+
+    if (!res) {
+      yield put(
+        getReportFailure({
+          isError: 1,
+          message: res.ErrorMessage,
+        })
+      );
+    } else {
+      yield put(getReportSuccess({ res }));
+    }
+  } catch (error) {
+    yield put(getReportFailure({ isError: 1, message: error }));
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery("Surat/postSubmitSurat", postSubmitSurat),
@@ -120,5 +141,6 @@ export default function* rootSaga() {
     takeEvery("Surat/getInbox", getInbox),
     takeEvery("Surat/getOutbox", getOutbox),
     takeEvery("Surat/getTracking", getTracking),
+    takeEvery("Surat/getReport", getReport),
   ]);
 }
