@@ -9,12 +9,12 @@ import {
 import { history } from "./helpers/history.js";
 
 import { PrivateRoute } from "./PrivateRoute";
-import Login from "./pages/Login";
-import Tracking from "./pages/Tracking";
-import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin/Admin";
-import Create from "./pages/Create";
-import InputSurat from "./pages/Admin/InputSurat";
+import Login from "./Pages/Login";
+import Tracking from "./Pages/Tracking";
+import NotFound from "./Pages/NotFound";
+import Admin from "./Pages/Admin/Admin";
+import Create from "./Pages/Create";
+import InputSurat from "./Pages/Admin/InputSurat";
 
 function App() {
   // init custom history object to allow navigation from
