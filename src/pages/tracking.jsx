@@ -35,7 +35,7 @@ const Tracking = () => {
   return (
     <div
       className="bg-cover bg-center w-screen h-screen grid place-items-center p-14"
-      style={{ backgroundImage: "url(/bg-full.jpeg)" }}
+      style={{ backgroundImage: "url(/bg-full.webp)" }}
     >
       <Loader isLoading={loading} />
       <div className="w-full h-full bg-white rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">

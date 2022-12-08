@@ -46,7 +46,7 @@ const Login = () => {
       <Loader isLoading={loading} />
       <div
         className="bg-cover bg-center w-screen h-screen grid place-items-center"
-        style={{ backgroundImage: "url(/bg-full.jpeg)" }}
+        style={{ backgroundImage: "url(/bg-full.webp)" }}
       >
         <div className="lg:w-1/3 lg:h-[45%] bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
           <div className="flex flex-col justify-items-center">
