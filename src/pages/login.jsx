@@ -27,7 +27,7 @@ const Login = () => {
   const data = useSelector((state) => state.Authentication.data);
   const loading = useSelector((state) => state.Authentication.loading);
   const lsData = JSON.parse(localStorage.getItem("userData"));
-
+  
   useEffect(() => {
     if (!isObjectEmpty(lsData)) {
       history.navigate("/");

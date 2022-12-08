@@ -56,17 +56,18 @@ const InputSurat = () => {
       });
   }, [loading, message]);
 
-  function handleLogin(e) {
+  function handleSubmit(e) {
     e.preventDefault();
+    
     let pl = {
       nik: nikRef.current.value,
       nama: namaRef.current.value,
       no_hp: phoneRef.current.value,
       email: emailRef.current.value,
-      tujuan: tujuanRef.current.value,
+      tujuan: tujuanRef.current.selectedOptions[0].text,
       judul: judulRef.current.value,
       lampiran: url, // ? url.split("/").pop() : url,
-      status: "A",
+      status: tujuanRef.current.value,
     };
     let err = error;
     err.nik = !nikParser(pl.nik).isValid();
@@ -92,7 +93,9 @@ const InputSurat = () => {
     }
     dispatch(toogleLoading(false));
   }
-
+  function onChangeTujuan(e) {
+    
+  }
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
     e.preventDefault();
@@ -129,7 +132,7 @@ const InputSurat = () => {
         className="grid gap-y-4 p-5"
         method="POST"
         ref={formRef}
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
       >
         <div>
           <div className="relative">
@@ -267,12 +270,13 @@ const InputSurat = () => {
           <div className="relative">
             <select
               ref={tujuanRef}
+              // onChange={onChangeTujuan}
               className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             >
               <option value="0">Silahkan Pilih Tujuan</option>
-              <option value="Walikota">Walikota</option>
-              <option value="Wakil Walikota">Wakil Walikota</option>
-              <option value="Sekot">Sekot</option>
+              <option value="B1">Walikota</option>
+              <option value="B2">Wakil Walikota</option>
+              <option value="B3">Sekot</option>
             </select>
             {error.tujuan ? (
               <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
