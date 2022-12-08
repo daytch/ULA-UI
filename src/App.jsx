@@ -43,7 +43,7 @@ function App() {
       <Route path="/notfound" element={<NotFound />} />
       <Route path="/tracking" element={<Tracking />} />
       <Route path="/create" element={<Create />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={ <Navigate to="/notfound" replace />} />
     </Routes>
   );
 }
