@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import {
   Routes,
   Route,
@@ -9,19 +9,19 @@ import {
 import { history } from "./helpers/history.js";
 
 import { PrivateRoute } from "./PrivateRoute";
-// import Login from "./pages/Login.jsx";
-// import Tracking from "./pages/Tracking.jsx";
-// import NotFound from "./pages/NotFound.jsx";
-// import Admin from "./pages/Admin/Admin.jsx";
-// import Create from "./pages/Create.jsx";
-// import InputSurat from "./pages/Admin/InputSurat.jsx";
+// import Login from "./pages/Login";
+// import Tracking from "./pages/Tracking";
+// import NotFound from "./pages/NotFound";
+// import Admin from "./pages/Admin/Admin";
+// import Create from "./pages/Create";
+// import InputSurat from "./pages/Admin/InputSurat";
 
-const Login = lazy(() => import("./pages/Login.jsx"));
-const Tracking = lazy(() => import("./pages/Tracking.jsx"));
-const NotFound = lazy(() => import("./pages/NotFound.jsx"));
-const Admin = lazy(() => import("./pages/Admin/Admin.jsx"));
-const Create = lazy(() => import("./pages/Create.jsx"));
-const InputSurat = lazy(() => import("./pages/Admin/InputSurat.jsx"));
+const Login = React.lazy(() => import("./pages/login"));
+const Tracking = React.lazy(() => import("./pages/tracking"));
+const NotFound = React.lazy(() => import("./pages/notfound"));
+const Admin = React.lazy(() => import("./pages/admin/admin"));
+const Create = React.lazy(() => import("./pages/create"));
+const InputSurat = React.lazy(() => import("./pages/admin/inputsurat"));
 
 function App() {
   // init custom history object to allow navigation from
