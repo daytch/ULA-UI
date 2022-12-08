@@ -9,12 +9,19 @@ import {
 import { history } from "./helpers/history.js";
 
 import { PrivateRoute } from "./PrivateRoute";
-import Login from "./pages/Login.jsx";
-import Tracking from "./pages/Tracking.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import Admin from "./pages/Admin/Admin.jsx";
-import Create from "./pages/Create.jsx";
-import InputSurat from "./pages/Admin/InputSurat.jsx";
+// import Login from "./pages/Login.jsx";
+// import Tracking from "./pages/Tracking.jsx";
+// import NotFound from "./pages/NotFound.jsx";
+// import Admin from "./pages/Admin/Admin.jsx";
+// import Create from "./pages/Create.jsx";
+// import InputSurat from "./pages/Admin/InputSurat.jsx";
+
+const Login = lazy(() => import("./pages/Login.jsx"));
+const Tracking = lazy(() => import("./pages/Tracking.jsx"));
+const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+const Admin = lazy(() => import("./pages/Admin/Admin.jsx"));
+const Create = lazy(() => import("./pages/Create.jsx"));
+const InputSurat = lazy(() => import("./pages/Admin/InputSurat.jsx"));
 
 function App() {
   // init custom history object to allow navigation from
