@@ -10,4 +10,5 @@ export const URL = {
   GET_OUTBOX: "/suratkeluar",
   TRACKING: "/trackingpage",
   LAPORAN: "/laporan",
+  SELFSERVICE: "/selfservice",
 };

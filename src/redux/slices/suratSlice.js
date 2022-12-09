@@ -29,6 +29,21 @@ export const suratSlice = createSlice({
       state.message = "";
     },
 
+    postSelfService: (state) => {
+      state.loading = true;
+      state.message = "";
+    },
+    postSelfServiceSuccess: (state, action) => {
+      state.data = action.payload.data;
+      state.message = "Data berhasil di save";
+      state.loading = false;
+    },
+    postSelfServiceFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+      state.message = "";
+    },
+
     postActionSurat: (state) => {
       state.loading = true;
     },
@@ -100,6 +115,9 @@ export const {
   postSubmitSurat,
   postSubmitSuratFailure,
   postSubmitSuratSuccess,
+  postSelfService,
+  postSelfServiceFailure,
+  postSelfServiceSuccess,
   postActionSurat,
   postActionSuratFailure,
   postActionSuratSuccess,

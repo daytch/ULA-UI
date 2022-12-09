@@ -36,6 +36,11 @@ const InputSurat = () => {
     judul: false,
     lampiran: false,
   });
+  const listTujuan = [
+    { id: "B1", text: "Walikota" },
+    { id: "B2", text: "Wakil Walikota" },
+    { id: "B3", text: "Sekot" },
+  ];
 
   useEffect(() => {
     console.log("error:", error);
@@ -58,7 +63,7 @@ const InputSurat = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    
+
     let pl = {
       nik: nikRef.current.value,
       nama: namaRef.current.value,
@@ -93,9 +98,7 @@ const InputSurat = () => {
     }
     dispatch(toogleLoading(false));
   }
-  function onChangeTujuan(e) {
-    
-  }
+  function onChangeTujuan(e) {}
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
     e.preventDefault();

@@ -5,6 +5,8 @@ import { POST, GET } from "./../middleware/index";
 import {
   postSubmitSuratFailure,
   postSubmitSuratSuccess,
+  postSelfServiceFailure,
+  postSelfServiceSuccess,
   postActionSuratFailure,
   postActionSuratSuccess,
   getInboxFailure,
@@ -35,6 +37,26 @@ export function* postSubmitSurat(action) {
     }
   } catch (error) {
     yield put(postSubmitSuratFailure({ isError: 1, message: error }));
+  }
+}
+
+export function* postSelfService(action) {
+  try {
+    const data = action.payload;
+    const res = yield call(POST, URL.SELFSERVICE, data);
+
+    if (res.message.toLowerCase().indexOf("success") === -1) {
+      yield put(
+        postSelfServiceFailure({
+          isError: 1,
+          message: res.ErrorMessage,
+        })
+      );
+    } else {
+      yield put(postSelfServiceSuccess({ res }));
+    }
+  } catch (error) {
+    yield put(postSelfServiceFailure({ isError: 1, message: error }));
   }
 }
 
@@ -137,6 +159,7 @@ export function* getReport() {
 export default function* rootSaga() {
   yield all([
     takeEvery("Surat/postSubmitSurat", postSubmitSurat),
+    takeEvery("Surat/postSelfService", postSelfService),
     takeEvery("Surat/postActionSurat", postActionSurat),
     takeEvery("Surat/getInbox", getInbox),
     takeEvery("Surat/getOutbox", getOutbox),

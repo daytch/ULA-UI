@@ -6,6 +6,7 @@ import { getInbox, postActionSurat } from "../../redux/slices/suratSlice.js";
 import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
 import wording from "../../assets/wording.json";
+import FileSaver from "file-saver";
 
 let PageSize = 10;
 
@@ -26,6 +27,10 @@ const SuratMasuk = () => {
 
   const inbox = useSelector((state) => state.Surat.inbox);
   const master = useSelector((state) => state.Surat.inbox);
+
+  useEffect(() => {
+    console.log("detail:", detail);
+  }, [detail]);
 
   useEffect(() => {
     setFilteredData(inbox);
@@ -53,6 +58,12 @@ const SuratMasuk = () => {
   const filteringData = (e) => {
     let keyword = e.currentTarget.value.toLowerCase();
     setKeywords(keyword);
+  };
+
+  const downloadFile = (url) => {
+    var filename = url.split("/").pop();
+    // var firstPart = url.split(filename).shift();
+    FileSaver.saveAs(url, filename);
   };
 
   const renderModal = () => {
@@ -211,16 +222,21 @@ const SuratMasuk = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="lampiran"
-                    className="block text-sm font-medium mb-2 dark:text-white"
-                  >
-                    Lampiran
-                  </label>
-                  <img
-                    src={detail.lampiran}
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                  />
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="lampiran"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Lampiran
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => downloadFile(detail.lampiran)}
+                      class="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Download
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -315,16 +331,21 @@ const SuratMasuk = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="lampiran"
-                    className="block text-sm font-medium mb-2 dark:text-white"
-                  >
-                    Lampiran
-                  </label>
-                  <img
-                    src={detail.lampiran}
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                  />
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="lampiran"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Lampiran
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => downloadFile(detail.lampiran)}
+                      class="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Download
+                    </button>
+                  </div>
                 </div>
 
                 <hr />
@@ -342,9 +363,7 @@ const SuratMasuk = () => {
                       value="0"
                       className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                     >
-                      <option value="0">
-                        Please Select
-                      </option>
+                      <option value="0">Please Select</option>
                       <option value="B1">Admin Walikota</option>
                       <option value="B2">Admin Wakil Walikota</option>
                       <option value="B3">Admin Sekot</option>
@@ -493,7 +512,15 @@ const SuratMasuk = () => {
                           className="text-blue-500 hover:text-blue-700"
                           href="#"
                           data-hs-overlay="#modal-forward"
-                          onClick={() => setDetail(item)}
+                          onClick={() => {
+                            let selct = listTujuan.filter(
+                              (x) => x.text === item.tujuan
+                            );
+                            if (selct.length > 0) {
+                              kepadaRef.current.value = selct[0].id;
+                            }
+                            setDetail(item);
+                          }}
                         >
                           Forward
                         </a>{" "}

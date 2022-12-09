@@ -5,6 +5,7 @@ import { useEffectOnce, convertDate } from "../../functions/index.js";
 import { getOutbox, postActionSurat } from "../../redux/slices/suratSlice.js";
 import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
+import FileSaver from "file-saver";
 
 let PageSize = 10;
 
@@ -52,6 +53,12 @@ const SuratKeluar = () => {
   const filteringData = (e) => {
     let keyword = e.currentTarget.value.toLowerCase();
     setKeywords(keyword);
+  };
+
+  const downloadFile = (url) => {
+    var filename = url.split("/").pop();
+    // var firstPart = url.split(filename).shift();
+    FileSaver.saveAs(url, filename);
   };
 
   const renderModal = () => {
@@ -210,17 +217,23 @@ const SuratKeluar = () => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="lampiran"
-                    className="block text-sm font-medium mb-2 dark:text-white"
-                  >
-                    Lampiran
-                  </label>
-                  <img
-                    src={detail.lampiran}
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                  />
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="lampiran"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Lampiran
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => downloadFile(detail.lampiran)}
+                      class="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Download
+                    </button>
+                  </div>
                 </div>
+
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
@@ -240,7 +253,7 @@ const SuratKeluar = () => {
 
   const handlePostAction = () => {
     dispatch(toogleLoading(true));
-    
+
     let payload = {
       id: Number(detail.id), // id surat
       destination: kepadaRef.current.value, // Admin Walikota
