@@ -17,6 +17,8 @@ const SuratMasuk = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [keywords, setKeywords] = useState("");
   const [totalData, setTotalData] = useState(0);
+  const [url, setUrl] = useState("");
+  const role = JSON.parse(localStorage.getItem("userData")).role;
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
@@ -27,6 +29,31 @@ const SuratMasuk = () => {
 
   const inbox = useSelector((state) => state.Surat.inbox);
   const master = useSelector((state) => state.Surat.inbox);
+
+  const changeUploadFile = async (e) => {
+    dispatch(toogleLoading(true));
+    e.preventDefault();
+    const formData = new FormData();
+    const image = e.target.files[0];
+
+    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
+      formData.append("file", image);
+      formData.append("upload_preset", "pemkot_bitung");
+
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/daytch/image/upload",
+        formData
+      ).then((res) => {
+        setUrl(res.data["secure_url"]);
+        dispatch(toogleLoading(false));
+      });
+    } else {
+      let er = error;
+      er.lampiran = true;
+      setError(er);
+      dispatch(toogleLoading(false));
+    }
+  };
 
   useEffect(() => {
     console.log("detail:", detail);
@@ -350,26 +377,15 @@ const SuratMasuk = () => {
 
                 <hr />
 
-                <div>
-                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
-                    <label
-                      htmlFor="tujuan"
-                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
-                    >
-                      Kepada
-                    </label>
-                    <select
-                      ref={kepadaRef}
-                      value="0"
-                      className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                    >
-                      <option value="0">Please Select</option>
-                      <option value="B1">Admin Walikota</option>
-                      <option value="B2">Admin Wakil Walikota</option>
-                      <option value="B3">Admin Sekot</option>
-                    </select>
-                  </div>
-                </div>
+                {role === "A" ? null : (
+                  <input
+                    onChange={changeUploadFile}
+                    type="file"
+                    name="small-file-input"
+                    id="small-file-input"
+                    className="bg-white block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-2 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
+                  />
+                )}
 
                 <div>
                   <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
@@ -417,18 +433,30 @@ const SuratMasuk = () => {
 
     let payload = {
       id: Number(detail.id), // id surat
-      destination: kepadaRef.current.value, // Admin Walikota
+      destination:
+        role !== "A"
+          ? "F"
+          : detail.tujuan.indexOf("sekot") > -1
+          ? "B3"
+          : detail.tujuan.indexOf("wakil") > -1
+          ? "B2"
+          : "B1", // kepadaRef.current.value, // Admin Walikota
       keterangan: keteranganRef.current.value,
+      lampiran: url,
     };
+    let contentWA = "";
+    if (role === "A") {
+      delete payload.lampiran;
+      contentWA = wording.tracking
+        .replace("#url", window.location.origin)
+        .replace("#no", detail.no_surat);
+    } else {
+      contentWA = wording.tracking.replace("#download", url);
+    }
     dispatch(postActionSurat(payload));
     dispatch(toogleLoading(false));
     window.open(
-      "https://wa.me/" +
-        detail.no_hp +
-        "/?text=" +
-        wording.tracking +
-        "" +
-        detail.id,
+      "https://wa.me/" + detail.no_hp + "/?text=" + contentWA,
       "_blank"
     );
   };
@@ -512,17 +540,9 @@ const SuratMasuk = () => {
                           className="text-blue-500 hover:text-blue-700"
                           href="#"
                           data-hs-overlay="#modal-forward"
-                          onClick={() => {
-                            let selct = listTujuan.filter(
-                              (x) => x.text === item.tujuan
-                            );
-                            if (selct.length > 0) {
-                              kepadaRef.current.value = selct[0].id;
-                            }
-                            setDetail(item);
-                          }}
+                          onClick={() => setDetail(item)}
                         >
-                          Forward
+                          {role === "A" ? "Forward" : "Reply"}
                         </a>{" "}
                         |{" "}
                         <a

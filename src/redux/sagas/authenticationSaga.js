@@ -26,10 +26,11 @@ export function* postLogin(action) {
       let d = {
         token: res.token,
         email: data.username,
+        role: res.role,
       };
       localStorage.setItem("token", d.token);
       localStorage.setItem("userData", JSON.stringify(d));
-      
+
       yield put(postLoginSuccess({ data: d }));
       const { from } = history.location.state || { from: { pathname: "/" } };
     }

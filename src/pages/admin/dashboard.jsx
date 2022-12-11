@@ -44,13 +44,13 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Dataset 1",
-        data: [1,2,3,4,5,6,7,8,9,10,11,12],
+        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
         label: "Dataset 2",
-        data: [1,2,3,4,5,6,7,8,9,10,11,12],
+        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
@@ -76,7 +76,6 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log("data:", dt);
     if (!isObjectEmpty(dt)) {
       let lbl = dt.suratmasuk.detail.map((x) => x.periode);
       let dtMasuk = dt.suratmasuk.detail.map((x) => x.total);
@@ -115,10 +114,10 @@ const Dashboard = () => {
 
   return (
     <header>
-      <div className="flex justify-around">
-        <div>
+      <div className="flex flex-wrap gap-y-2 md:justify-around lg:justify-around">
+        <div className="flex">
           <div className="flex justify-center">
-            <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] w-60">
+            <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] w-96 lg:w-60 md:w-60">
               <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                 Surat Masuk
               </h5>
@@ -128,9 +127,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex">
           <div className="flex justify-center">
-            <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] w-60">
+            <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] w-96 lg:w-60 md:w-60">
               <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                 Surat di proses
               </h5>
@@ -140,9 +139,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex">
           <div className="flex justify-center">
-            <div className="block p-6 h-44 rounded-lg shadow-lg bg-[#F3F4F6] w-60">
+            <div className="block p-6 h-44 rounded-lg shadow-lg bg-[#F3F4F6] w-96 lg:w-60 md:w-60">
               <h5 className="text-gray-900 text-center text-xl leading-tight font-medium mb-2">
                 Surat dibalas
               </h5>

@@ -56,7 +56,7 @@ const Create = () => {
     console.log("error:", error);
   }, [error]);
 
-  function handleLogin(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     let pl = {
       nik: nikRef.current.value,
@@ -135,7 +135,7 @@ const Create = () => {
             className="grid gap-y-4 p-5"
             method="POST"
             ref={formRef}
-            onSubmit={handleLogin}
+            onSubmit={handleSubmit}
           >
             <div>
               <div className="relative">
