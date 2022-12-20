@@ -7,6 +7,7 @@ import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
 import wording from "../../assets/wording.json";
 import FileSaver from "file-saver";
+import axios from "axios";
 
 let PageSize = 10;
 
@@ -19,6 +20,11 @@ const SuratMasuk = () => {
   const [totalData, setTotalData] = useState(0);
   const [url, setUrl] = useState("");
   const role = JSON.parse(localStorage.getItem("userData")).role;
+
+  console.log("detail:", detail);
+  console.log("filteredData:", filteredData);
+  console.log("keywords:", keywords);
+  console.log("url:", url);
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
@@ -40,13 +46,12 @@ const SuratMasuk = () => {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
-      await Axios.post(
-        "https://api.cloudinary.com/v1_1/daytch/image/upload",
-        formData
-      ).then((res) => {
-        setUrl(res.data["secure_url"]);
-        dispatch(toogleLoading(false));
-      });
+      await axios
+        .post("https://api.cloudinary.com/v1_1/daytch/image/upload", formData)
+        .then((res) => {
+          setUrl(res.data["secure_url"]);
+          dispatch(toogleLoading(false));
+        });
     } else {
       let er = error;
       er.lampiran = true;
@@ -259,7 +264,7 @@ const SuratMasuk = () => {
                     <button
                       type="button"
                       onClick={() => downloadFile(detail.lampiran)}
-                      class="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                      className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                     >
                       Download
                     </button>
@@ -368,7 +373,7 @@ const SuratMasuk = () => {
                     <button
                       type="button"
                       onClick={() => downloadFile(detail.lampiran)}
-                      class="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                      className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                     >
                       Download
                     </button>
