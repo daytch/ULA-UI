@@ -8,6 +8,11 @@ import Pagination from "./../../components/Pagination";
 import wording from "../../assets/wording.json";
 import FileSaver from "file-saver";
 import axios from "axios";
+import {
+  DocumentTextIcon,
+  PaperAirplaneIcon,
+  ForwardIcon,
+} from "@heroicons/react/24/outline";
 
 let PageSize = 10;
 
@@ -21,10 +26,10 @@ const SuratMasuk = () => {
   const [url, setUrl] = useState("");
   const role = JSON.parse(localStorage.getItem("userData")).role;
 
-  console.log("detail:", detail);
-  console.log("filteredData:", filteredData);
-  console.log("keywords:", keywords);
-  console.log("url:", url);
+  // console.log("detail:", detail);
+  // console.log("filteredData:", filteredData);
+  // console.log("keywords:", keywords);
+  // console.log("url:", url);
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
@@ -435,35 +440,8 @@ const SuratMasuk = () => {
 
   const handlePostAction = () => {
     dispatch(toogleLoading(true));
-
-    let payload = {
-      id: Number(detail.id), // id surat
-      destination:
-        role !== "A"
-          ? "F"
-          : detail.tujuan.indexOf("sekot") > -1
-          ? "B3"
-          : detail.tujuan.indexOf("wakil") > -1
-          ? "B2"
-          : "B1", // kepadaRef.current.value, // Admin Walikota
-      keterangan: keteranganRef.current.value,
-      lampiran: url,
-    };
-    let contentWA = "";
-    if (role === "A") {
-      delete payload.lampiran;
-      contentWA = wording.tracking
-        .replace("#url", window.location.origin)
-        .replace("#no", detail.no_surat);
-    } else {
-      contentWA = wording.tracking.replace("#download", url);
-    }
     dispatch(postActionSurat(payload));
     dispatch(toogleLoading(false));
-    window.open(
-      "https://wa.me/" + detail.no_hp + "/?text=" + contentWA,
-      "_blank"
-    );
   };
 
   return (
@@ -540,24 +518,53 @@ const SuratMasuk = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {convertDate(item.createdAt)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <a
-                          className="text-blue-500 hover:text-blue-700"
-                          href="#"
-                          data-hs-overlay="#modal-forward"
-                          onClick={() => setDetail(item)}
-                        >
-                          {role === "A" ? "Forward" : "Reply"}
-                        </a>{" "}
-                        |{" "}
-                        <a
-                          className="text-blue-500 hover:text-blue-700"
-                          href="#"
-                          data-hs-overlay="#hs-vertically-centered-scrollable-modal"
-                          onClick={() => setDetail(item)}
-                        >
-                          View
-                        </a>
+                      <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <div class="hs-tooltip inline-block [--placement:left] mx-1">
+                          <a
+                            className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
+                            href="#"
+                            data-hs-overlay="#modal-forward"
+                            onClick={() => setDetail(item)}
+                          >
+                            {role === "A" ? (
+                              <>
+                                <ForwardIcon className="h-5 w-5 text-blue-500" />
+                                <span
+                                  className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip"
+                                >
+                                  Forward Document
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <PaperAirplaneIcon className="h-5 w-5 text-blue-500" />
+                                <span
+                                  className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip"
+                                >
+                                  Reply Document
+                                </span>
+                              </>
+                            )}
+                          </a>
+                        </div>
+                        <div class="hs-tooltip inline-block [--placement:right] mx-1">
+                          <a
+                            className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
+                            href="#"
+                            data-hs-overlay="#hs-vertically-centered-scrollable-modal"
+                            onClick={() => setDetail(item)}
+                          >
+                            <DocumentTextIcon className="h-5 w-5 text-blue-500" />
+                            <span
+                              className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip"
+                            >
+                              View Document
+                            </span>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                   );

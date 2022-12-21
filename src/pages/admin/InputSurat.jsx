@@ -92,6 +92,10 @@ const InputSurat = () => {
       !err.judul &&
       !err.lampiran
     ) {
+      pl.no_hp =
+        String(pl.no_hp).substring(0, 1) === "0"
+          ? Number("+62" + String(pl.no_hp).substring(1))
+          : pl.no_hp;
       dispatch(postSubmitSurat({ data: pl }));
     } else {
       setError({ ...error, err });
