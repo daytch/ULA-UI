@@ -43,7 +43,7 @@
     json5 "^2.2.1"
     semver "^6.3.0"
 
-"@babel/generator@^7.15.4", "@babel/generator@^7.20.7":
+"@babel/generator@^7.15.4", "@babel/generator@^7.15.8", "@babel/generator@^7.20.7":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.20.7.tgz#f8ef57c8242665c5929fe2e8d82ba75460187b4a"
   integrity sha512-7wqMOJq8doJMZmP4ApXTzLxSr7+oO2jroJURrVEp6XShrQUObV8Tq/D0NCcoYg2uHqUrjzO0zwBjoYzelxK+sw==
@@ -171,7 +171,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.15.6", "@babel/parser@^7.20.7":
+"@babel/parser@^7.15.6", "@babel/parser@^7.15.8", "@babel/parser@^7.20.7":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.7.tgz#66fe23b3c8569220817d5feb8b9dcdc95bb4f71b"
   integrity sha512-T3Z9oHybU+0vZlY9CiDSJQTD5ZapcW18ZctFMi0MOAl/4BjFF4ul7NVSARLdbGO5vDqy9eQiGTV0LtKfvCYvcg==
@@ -275,7 +275,7 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/types@^7.10.3", "@babel/types@^7.20.7":
+"@babel/types@^7.10.3", "@babel/types@^7.15.6", "@babel/types@^7.20.7":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.20.7.tgz#54ec75e252318423fc07fb644dc6a58a64c09b7f"
   integrity sha512-69OnhBxSSgK0OzTJai4kyPDiKTIe3j+ctaHdIGVbRahTLAT7L3R9oeXHC2aVSuGYt3cVnoAMDmOCgJ2yaiLMvg==
@@ -2448,6 +2448,16 @@ vite-compatible-readable-stream@^3.6.1:
     inherits "^2.0.3"
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
+
+vite-plugin-require-transform@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vite-plugin-require-transform/-/vite-plugin-require-transform-1.0.4.tgz#5c9d61d4e87f4b699615eb7072187bebb3749451"
+  integrity sha512-YeIayGG2QYyl4mw8qdiqDqnjPRr2Cq7K2CFKCMX7mWuc3qZZP4eKdY3Exj3s3f7JblwlRmzmpSuWDTSN0BSofQ==
+  dependencies:
+    "@babel/generator" "^7.15.8"
+    "@babel/parser" "^7.15.8"
+    "@babel/traverse" "^7.15.4"
+    "@babel/types" "^7.15.6"
 
 vite-plugin-require@^1.1.10:
   version "1.1.10"
