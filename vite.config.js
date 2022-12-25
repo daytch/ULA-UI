@@ -14,11 +14,7 @@ export default defineConfig({
         // Solves:
         // https://github.com/vitejs/vite/issues/5308
         // add the name of your package
-        esbuildCommonjs([
-          "dayjs",
-          "dayjs-with-plugins",
-          "react-tailwindcss-datepicker",
-        ]),
+        esbuildCommonjs(["react-tailwindcss-datepicker"]),
       ],
     },
   },
