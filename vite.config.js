@@ -12,7 +12,7 @@ export default defineConfig({
     esbuildOptions: {
       plugins: [esbuildCommonjs(['react-s3'])],
     },
-  }
+  },
   build: {
     rollupOptions: {
       output: {
