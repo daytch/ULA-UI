@@ -519,7 +519,7 @@ const SuratMasuk = () => {
                         {convertDate(item.createdAt)}
                       </td>
                       <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <div class="hs-tooltip inline-block [--placement:left] mx-1">
+                        <div className="hs-tooltip inline-block [--placement:left] mx-1">
                           <a
                             className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
                             href="#"
@@ -549,7 +549,7 @@ const SuratMasuk = () => {
                             )}
                           </a>
                         </div>
-                        <div class="hs-tooltip inline-block [--placement:right] mx-1">
+                        <div className="hs-tooltip inline-block [--placement:right] mx-1">
                           <a
                             className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
                             href="#"

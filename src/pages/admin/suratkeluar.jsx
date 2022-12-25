@@ -281,22 +281,22 @@ const SuratKeluar = () => {
     return (
       <div
         id="hs-scroll-inside-body-modal"
-        class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
+        className="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
       >
-        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto h-[calc(100%-3.5rem)] lg:max-w-[50vw]">
-          <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
-              <h3 class="font-bold text-gray-800 dark:text-white">
+        <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto h-[calc(100%-3.5rem)] lg:max-w-[50vw]">
+          <div className="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+            <div className="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+              <h3 className="font-bold text-gray-800 dark:text-white">
                 Modal title
               </h3>
               <button
                 type="button"
-                class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
                 data-hs-overlay="#hs-scroll-inside-body-modal"
               >
-                <span class="sr-only">Close</span>
+                <span className="sr-only">Close</span>
                 <svg
-                  class="w-3.5 h-3.5"
+                  className="w-3.5 h-3.5"
                   width="8"
                   height="8"
                   viewBox="0 0 8 8"
@@ -310,7 +310,7 @@ const SuratKeluar = () => {
                 </svg>
               </button>
             </div>
-            <div class="p-4 overflow-y-auto">
+            <div className="p-4 overflow-y-auto">
               <PDFViewer width="700px" height="500px">
                 <Document>
                   <Page style={styles.body}>
@@ -321,20 +321,20 @@ const SuratKeluar = () => {
                 </Document>
               </PDFViewer>
             </div>
-            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+            <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
               <button
                 type="button"
-                class="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                 data-hs-overlay="#hs-scroll-inside-body-modal"
               >
                 Close
               </button>
-              <a
-                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              {/* <a
+                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                 href="#"
               >
                 Save changes
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -374,7 +374,7 @@ const SuratKeluar = () => {
       delete payload.lampiran;
       contentWA = ContentWording.replace(
         "#url",
-        window.location.origin + "/tracking/" + item.no_surat
+        window.location.origin + "/tracking?no=" + item.no_surat
       );
     } else {
       ContentWording = wording.finished;
@@ -383,7 +383,7 @@ const SuratKeluar = () => {
         item.suratAttachment[0].lampiran
       );
     }
-    debugger;
+
     window.open(
       "https://wa.me/" +
         (String(item.no_hp).substring(0, 1) === "0"
@@ -401,7 +401,7 @@ const SuratKeluar = () => {
     if (role === "A") {
       contentWA = ContentWording.replace(
         "#url",
-        window.location.origin + "/tracking/" + item.no_surat
+        window.location.origin + "/tracking?no=" + item.no_surat
       );
     } else {
       ContentWording = wording.finished;

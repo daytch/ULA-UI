@@ -868,6 +868,16 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
+dayjs-with-plugins@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/dayjs-with-plugins/-/dayjs-with-plugins-1.0.2.tgz#feae38dbd23906d3b31f41bb8a240290281c98d0"
+  integrity sha512-ES6X8wjAo3zDQg841UUYIxDAmkg1snGTLpmtPW1EaRI/NyvzE5hKcFKlnoX4wU8vs0yeenJsyD9TZCluY0hs/g==
+
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
+
 debug@^4.1.0:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
@@ -1584,6 +1594,11 @@ react-router@6.4.3:
   integrity sha512-BT6DoGn6aV1FVP5yfODMOiieakp3z46P1Fk0RNzJMACzE7C339sFuHebfvWtnB4pzBvXXkHP2vscJzWRuUjTtA==
   dependencies:
     "@remix-run/router" "1.0.3"
+
+react-tailwindcss-datepicker@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/react-tailwindcss-datepicker/-/react-tailwindcss-datepicker-1.3.2.tgz#166d5dbbeaa642070be9a4dd8bd3d3bf041205c4"
+  integrity sha512-gG4s4daboLyI3PyUffAIQLCoD2fLnUCzeqRGgfwGW7a+IeQLODMnZuS4dnzBzaXzdCADtG60YxiYNqrVZRC64w==
 
 react@^18.2.0:
   version "18.2.0"

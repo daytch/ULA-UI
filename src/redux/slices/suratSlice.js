@@ -6,7 +6,7 @@ export const suratSlice = createSlice({
     data: {},
     inbox: [],
     outbox: [],
-    tracking: [],
+    tracking: {},
     laporan: [],
     loading: false,
     error: "",
@@ -64,6 +64,7 @@ export const suratSlice = createSlice({
       state.tracking = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
+      console.log("state.tracking:", state.tracking);
     },
     getTrackingFailure: (state, action) => {
       state.loading = false;

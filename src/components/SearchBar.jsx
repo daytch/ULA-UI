@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { OS } from "../functions/index.js";
+import Datepicker from "react-tailwindcss-datepicker";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
 const SearchBox = (props) => {
-  const { filteringData } = props;
+  const { filteringData, withDateFilter, handleValueChange, value } = props;
   const searchRef = useRef();
   const handleUserKeyPress = useCallback((event) => {
     const { key, keyCode } = event;
@@ -19,7 +21,7 @@ const SearchBox = (props) => {
   }, [handleUserKeyPress]);
 
   return (
-    <div className="py-3">
+    <div className="py-3 flex flex-row justify-between">
       <div className="relative max-w-xs">
         <label htmlFor="hs-table-search" className="sr-only">
           Search
@@ -50,6 +52,17 @@ const SearchBox = (props) => {
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
           </svg>
         </div>
+      </div>
+      <div className="lg:w-96 inline-flex align-middle mr-4">
+        <label className="text-xs font-light">Tanggal Pegiriman</label>
+        <Datepicker value={value} onChange={handleValueChange} />
+
+        <button
+          data-hs-overlay="#hs-medium-modal"
+          className="ml-3 py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+        >
+          <ArrowDownOnSquareIcon className="w-4 h-4" /> Export
+        </button>
       </div>
     </div>
   );
