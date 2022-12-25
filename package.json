@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@react-pdf/renderer": "^3.0.1",
     "@reduxjs/toolkit": "^1.8.6",
     "autoprefixer": "^10.4.12",
