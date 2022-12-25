@@ -2,7 +2,7 @@
   "name": "ula-ui",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "homepage": ".",
   "scripts": {
     "start": "vite",
