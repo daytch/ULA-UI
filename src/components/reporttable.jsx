@@ -10,7 +10,7 @@ import {
 import PropTypes from "prop-types";
 import { convertDate } from "../functions/index.js";
 
-const ReportTable = (props) => {
+const reporttable = (props) => {
   const { listSurat } = props;
 
   const HeaderTable = () => (
@@ -202,8 +202,8 @@ const ReportTable = (props) => {
   );
 };
 
-ReportTable.propTypes = {
+reporttable.propTypes = {
   listSurat: PropTypes.array,
 };
 
-export default ReportTable;
+export default reporttable;
