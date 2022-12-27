@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import SearchBox from "../../components/SearchBar";
-import reporttable from "../../components/reporttable";
+import ReportTable from "../../components/ReportTable";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectOnce, convertDate } from "../../functions/index.js";
 import { getReport, postActionSurat } from "../../redux/slices/suratSlice.js";
@@ -453,7 +453,7 @@ const Laporan = () => {
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6]">
       <p className="text-xl font-light my-4">Laporan</p>
-      <reporttable listSurat={currentTableData} />
+      <ReportTable listsurat={currentTableData} />
       {renderModalReceipt()}
       {renderModal()}
       <div className="-m-1.5 overflow-x-auto">
