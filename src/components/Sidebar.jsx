@@ -1,9 +1,5 @@
 import React from "react";
 import LogoImage from "./../assets/logo.png";
-import InputSurat from "./../assets/icons8-edit.png";
-import SuratMasuk from "./../assets/inbox.png";
-import SuratKeluar from "./../assets/outbox.png";
-import Laporan from "./../assets/analytics.png";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveSidebarMenu } from "../redux/slices/dashboardSlice.js";
 
@@ -167,18 +163,15 @@ const Sidebar = () => {
                 <svg
                   className="w-3.5 h-3.5"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                   />
                 </svg>
                 Dashboard
@@ -190,7 +183,20 @@ const Sidebar = () => {
                 className={isActive.input ? activeClass : inActiveClass}
                 onClick={() => menuAction["input"]()}
               >
-                <img src={InputSurat} className="w-[16px] h-[16px]" />
+                <svg
+                  className="w-[16px] h-[16px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
                 Input Surat
               </div>
             </li>
@@ -200,7 +206,20 @@ const Sidebar = () => {
                 className={isActive.masuk ? activeClass : inActiveClass}
                 onClick={() => menuAction["masuk"]()}
               >
-                <img src={SuratMasuk} className="w-[16px] h-[16px]" />
+                <svg
+                  className="w-[16px] h-[16px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                  />
+                </svg>
                 Surat Masuk
               </div>
             </li>
@@ -210,7 +229,20 @@ const Sidebar = () => {
                 className={isActive.keluar ? activeClass : inActiveClass}
                 onClick={() => menuAction["keluar"]()}
               >
-                <img src={SuratKeluar} className="w-[16px] h-[16px]" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-[16px] h-[16px]"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                  />
+                </svg>
                 Surat Keluar
               </div>
             </li>
@@ -220,7 +252,20 @@ const Sidebar = () => {
                 className={isActive.laporan ? activeClass : inActiveClass}
                 onClick={() => menuAction["laporan"]()}
               >
-                <img src={Laporan} className="w-[16px] h-[16px]" />
+                <svg
+                  className="w-[16px] h-[16px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"
+                  />
+                </svg>
                 Laporan
               </div>
             </li>
