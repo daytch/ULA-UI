@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { OS } from "../functions/index.js";
-import Datepicker from "react-tailwindcss-datepicker";
+import Datepicker from "./rangedatepicker/react-tailwindcss-datepicker/dist/index.esm.js"; // "react-tailwindcss-datepicker";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
 const SearchBox = (props) => {
