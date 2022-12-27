@@ -33,7 +33,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.3",
-    "react-vite-range-datepicker": "^1.0.0",
+    "react-vite-range-datepicker": "^1.0.1",
     "redux-saga": "^1.2.1",
     "sweetalert2": "^11.6.15",
     "sweetalert2-react-content": "^5.0.7",

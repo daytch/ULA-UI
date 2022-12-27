@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { OS } from "../functions/index.js";
-import Datepicker from "react-vite-range-datepicker";
+import Datepicker from "react-vite-range-datepicker"
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
 const SearchBox = (props) => {

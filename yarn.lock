@@ -1878,10 +1878,10 @@ react-router@6.4.3:
   dependencies:
     "@remix-run/router" "1.0.3"
 
-react-vite-range-datepicker@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-vite-range-datepicker/-/react-vite-range-datepicker-1.0.0.tgz#5866a66d4ee99acca8ec6b1f48157899257e508d"
-  integrity sha512-T4pXHdMJ9yTNdzGmeYYg4f9xi/Pb+TVvInQ138/IJuWwZpxMTizkdo8Nmzl5aQLGEW/5/x/lS4qRp8ysUt68XA==
+react-vite-range-datepicker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-vite-range-datepicker/-/react-vite-range-datepicker-1.0.1.tgz#f39d9c197f6bf053f52caceedd90f826bdfea7d9"
+  integrity sha512-tA3iHp+q8W1XQZFAhupZCvKvYa7ND0tOF+2Xb70yK4h0jbjvB9DsMN7pRZb5TasNvRQuc7pI2tdSVU4Q5jUVmw==
 
 react@^18.2.0:
   version "18.2.0"
