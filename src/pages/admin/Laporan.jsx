@@ -456,7 +456,7 @@ const Laporan = () => {
       <ReportTable listsurat={currentTableData} />
       {renderModalReceipt()}
       {renderModal()}
-      <div className="-m-1.5 overflow-x-auto">
+      <div className="-m-1.5 h-[70vh] overflow-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
             <SearchBox
