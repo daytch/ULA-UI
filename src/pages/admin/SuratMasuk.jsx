@@ -13,7 +13,10 @@ import {
   PaperAirplaneIcon,
   ForwardIcon,
 } from "@heroicons/react/24/outline";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
+const MySwal = withReactContent(Swal);
 let PageSize = 10;
 
 const SuratMasuk = () => {
@@ -35,6 +38,10 @@ const SuratMasuk = () => {
   const keteranganRef = useRef();
 
   useEffectOnce(() => {
+    window.addEventListener("close.hs.overlay", (e) => {
+      setUrl("");
+      setDetail({});
+    });
     dispatch(getInbox());
   });
 
@@ -99,7 +106,6 @@ const SuratMasuk = () => {
 
   const downloadFile = (url) => {
     var filename = url.split("/").pop();
-    // var firstPart = url.split(filename).shift();
     FileSaver.saveAs(url, filename);
   };
 
@@ -439,9 +445,40 @@ const SuratMasuk = () => {
   };
 
   const handlePostAction = () => {
-    dispatch(toogleLoading(true));
-    dispatch(postActionSurat(payload));
-    dispatch(toogleLoading(false));
+    if (url) {
+      let payload = {
+        id: Number(detail.id), // id surat
+        destination:
+          role !== "A"
+            ? "F"
+            : detail.tujuan.indexOf("sekot") > -1
+            ? "B3"
+            : detail.tujuan.indexOf("wakil") > -1
+            ? "B2"
+            : "B1", // kepadaRef.current.value, // Admin Walikota
+        keterangan: keteranganRef.current.value,
+        lampiran: url,
+      };
+      let contentWA = "";
+      if (role === "A") {
+        delete payload.lampiran;
+        contentWA = wording.tracking
+          .replace("#url", window.location.origin)
+          .replace("#no", detail.no_surat);
+      } else {
+        contentWA = wording.tracking.replace("#download", url);
+      }
+
+      dispatch(toogleLoading(true));
+      dispatch(postActionSurat(payload));
+      dispatch(toogleLoading(false));
+    } else {
+      MySwal.fire({
+        title: <strong>Validation!</strong>,
+        html: "Harap Masukkan foto atau hasil scan surat balasan.",
+        icon: "warning",
+      });
+    }
   };
 
   return (

@@ -370,6 +370,7 @@ const SuratKeluar = () => {
     };
     let contentWA = "";
     let ContentWording = wording.tracking;
+    
     if (role === "A") {
       delete payload.lampiran;
       contentWA = ContentWording.replace(
@@ -380,7 +381,7 @@ const SuratKeluar = () => {
       ContentWording = wording.finished;
       contentWA = ContentWording.replace(
         "#download",
-        item.suratAttachment[0].lampiran
+        item.suratAttachment.length > 0 ? item.suratAttachment[0].lampiran : ""
       );
     }
 
