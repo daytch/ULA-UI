@@ -34,8 +34,11 @@ export const suratSlice = createSlice({
       state.message = "";
     },
     postSelfServiceSuccess: (state, action) => {
-      state.data = action.payload.data;
-      state.message = "Data berhasil di save";
+      let data = action.payload.res.data;
+      state.data = data;
+      state.message =
+        "Data berhasil di save. Silahkan simpan no surat anda: " +
+        data.no_surat;
       state.loading = false;
     },
     postSelfServiceFailure: (state, action) => {

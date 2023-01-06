@@ -221,11 +221,23 @@ export function convertDate(tgl) {
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1; // Months start at 0!
   let dd = today.getDate();
+  let hh = today.getHours();
+  let min = today.getMinutes();
 
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
 
-  return dd + "/" + mm + "/" + yyyy;
+  return (
+    dd +
+    "/" +
+    mm +
+    "/" +
+    yyyy +
+    " - " +
+    (hh.toString().length < 2 ? "0" + hh : hh) +
+    ":" +
+    (min.toString().length < 2 ? "0" + min : min)
+  );
 }
 export const generalNumberConverter = (angka, prefix, tipe) => {
   if (angka) {

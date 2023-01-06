@@ -135,7 +135,7 @@ const Header = () => {
                     href="#"
                     onClick={() => {
                       localStorage.clear();
-                      window.location.href = "/login";
+                      window.location.href = "/";
                     }}
                   >
                     <img src={Logout} className="w-[16px] h-[16px]" />

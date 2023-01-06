@@ -42,7 +42,7 @@ const Create = () => {
   const message = useSelector((state) => state.Surat.message);
 
   useEffect(() => {
-    if (message)
+    if (message) {
       MySwal.fire({
         title: <strong>Success!</strong>,
         html: message,
@@ -50,6 +50,7 @@ const Create = () => {
       }).then(() => {
         formRef.current.reset();
       });
+    }
   }, [loading, message]);
 
   useEffect(() => {
@@ -97,7 +98,7 @@ const Create = () => {
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-    
+
     if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");

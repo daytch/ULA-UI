@@ -81,6 +81,10 @@ const Tracking = () => {
                         <p className="font-light">
                           {mappingWording[item.status]}
                         </p>
+                        <p>
+                          note:
+                          <br /> {item.keterangan}
+                        </p>
                       </div>
                     );
                   })}

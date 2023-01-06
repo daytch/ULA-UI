@@ -54,7 +54,8 @@ const SuratKeluar = () => {
         if (
           x.nama.toLowerCase().indexOf(keywords) > -1 ||
           x.judul.toLowerCase().indexOf(keywords) > -1 ||
-          x.tujuan.toLowerCase().indexOf(keywords) > -1
+          x.tujuan.toLowerCase().indexOf(keywords) > -1 ||
+          x.nik.indexOf(keywords) > -1
         ) {
           return x;
         }
@@ -248,6 +249,28 @@ const SuratKeluar = () => {
                     </button>
                   </div>
                 </div>
+
+                <div>
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="keterangan"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Keterangan
+                    </label>
+                    <textarea
+                      disabled
+                      className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      rows="3"
+                      value={
+                        detail?.suratLog?.length > 0
+                          ? detail.suratLog[detail.suratLog.length - 1]
+                              .keterangan
+                          : ""
+                      }
+                    ></textarea>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
@@ -370,7 +393,7 @@ const SuratKeluar = () => {
     };
     let contentWA = "";
     let ContentWording = wording.tracking;
-    
+
     if (role === "A") {
       delete payload.lampiran;
       contentWA = ContentWording.replace(
@@ -451,6 +474,12 @@ const SuratKeluar = () => {
                   </th>
                   <th
                     scope="col"
+                    className="px-6 py-3 text-base text-center font-bold text-gray-500 uppercase"
+                  >
+                    NIK
+                  </th>
+                  <th
+                    scope="col"
                     className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
                   >
                     Pengirim
@@ -486,45 +515,52 @@ const SuratKeluar = () => {
                         {item.tujuan}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                        {item.nik}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.nama}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {convertDate(item.createdAt)}
                       </td>
                       <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <div className="hs-tooltip inline-block [--placement:left] mx-1">
-                          <a
-                            className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
-                            href="#"
-                            onClick={() => handleSendTandaTerima(item)}
-                          >
-                            <RocketLaunchIcon className="h-5 w-5 text-blue-500" />
-                            <span
-                              className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                              role="tooltip"
-                            >
-                              Kirim Tanda Terima
-                            </span>
-                          </a>
-                        </div>
+                        {role === "A" ? (
+                          <>
+                            <div className="hs-tooltip inline-block [--placement:left] mx-1">
+                              <a
+                                className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
+                                href="#"
+                                onClick={() => handleSendTandaTerima(item)}
+                              >
+                                <RocketLaunchIcon className="h-5 w-5 text-blue-500" />
+                                <span
+                                  className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip"
+                                >
+                                  Kirim Tanda Terima
+                                </span>
+                              </a>
+                            </div>
 
-                        <div className="hs-tooltip inline-block mx-1">
-                          <a
-                            className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
-                            href="#"
-                            data-hs-overlay="#hs-scroll-inside-body-modal"
-                            onClick={() => handlePrintTandaTerima(item)}
-                          >
-                            <PrinterIcon className="h-5 w-5 text-blue-500" />
-                            <span
-                              className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                              role="tooltip"
-                            >
-                              Cetak Tanda Terima
-                            </span>
-                          </a>
-                        </div>
-
+                            <div className="hs-tooltip inline-block mx-1">
+                              <a
+                                className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
+                                href="#"
+                                data-hs-overlay="#hs-scroll-inside-body-modal"
+                                onClick={() => handlePrintTandaTerima(item)}
+                              >
+                                <PrinterIcon className="h-5 w-5 text-blue-500" />
+                                <span
+                                  className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip"
+                                >
+                                  Cetak Tanda Terima
+                                </span>
+                              </a>
+                            </div>
+                          </>
+                        ) : null}
+                        
                         <div className="hs-tooltip inline-block [--placement:right] mx-1">
                           <a
                             className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"

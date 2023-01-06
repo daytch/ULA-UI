@@ -87,7 +87,8 @@ const SuratMasuk = () => {
         if (
           x.nama.toLowerCase().indexOf(keywords) > -1 ||
           x.judul.toLowerCase().indexOf(keywords) > -1 ||
-          x.tujuan.toLowerCase().indexOf(keywords) > -1
+          x.tujuan.toLowerCase().indexOf(keywords) > -1 ||
+          x.nik.indexOf(keywords) > -1
         ) {
           return x;
         }
@@ -281,6 +282,28 @@ const SuratMasuk = () => {
                     </button>
                   </div>
                 </div>
+
+                <div>
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="keterangan"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Keterangan
+                    </label>
+                    <textarea
+                      disabled
+                      className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      rows="3"
+                      value={
+                        detail?.suratLog?.length > 0
+                          ? detail.suratLog[detail.suratLog.length - 1]
+                              .keterangan
+                          : ""
+                      }
+                    ></textarea>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
@@ -391,6 +414,27 @@ const SuratMasuk = () => {
                   </div>
                 </div>
 
+                <div>
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
+                      htmlFor="keterangan"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Keterangan
+                    </label>
+                    <textarea
+                      disabled
+                      className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      rows="3"
+                      value={
+                        detail?.suratLog?.length > 0
+                          ? detail.suratLog[detail.suratLog.length - 1]
+                              .keterangan
+                          : ""
+                      }
+                    ></textarea>
+                  </div>
+                </div>
                 <hr />
 
                 {role === "A" ? null : (
@@ -497,31 +541,37 @@ const SuratMasuk = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                    className="px-6 py-3 text-center text-base font-bold text-gray-500 uppercase"
                   >
                     No Surat
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                    className="px-6 py-3 text-center text-base font-bold text-gray-500 uppercase"
                   >
                     Tujuan
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                    className="px-6 py-3 text-center text-base font-bold text-gray-500 uppercase"
                   >
                     Subject
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                    className="px-6 py-3 text-base text-center font-bold text-gray-500 uppercase"
+                  >
+                    NIK
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-base font-bold text-gray-500 uppercase"
                   >
                     Pengirim
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                    className="px-6 py-3 text-center text-base font-bold text-gray-500 uppercase"
                   >
                     Tanggal Masuk
                   </th>
@@ -548,6 +598,9 @@ const SuratMasuk = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.tujuan}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                        {item.nik}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.nama}

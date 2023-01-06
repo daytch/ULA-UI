@@ -33,8 +33,10 @@ const Laporan = () => {
     startDate: "",
     endDate: "",
   });
+  const [valueStatus, setValueStatus] = useState("all");
 
   const handleValueChange = (newValue) => setValue(newValue);
+  const handleStatusChange = (e) => setValueStatus(e.currentTarget.value);
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
@@ -61,6 +63,7 @@ const Laporan = () => {
   useEffect(() => {
     setFilteredData(inbox);
   }, [inbox]);
+
   useEffect(() => {
     console.log("value: ", value);
   }, [value]);
@@ -69,6 +72,7 @@ const Laporan = () => {
     var filename = url.split("/").pop();
     FileSaver.saveAs(url, filename);
   };
+
   const currentTableData = useMemo(() => {
     let dt = inbox;
     if (keywords) {
@@ -76,8 +80,17 @@ const Laporan = () => {
         if (
           x.nama.toLowerCase().indexOf(keywords) > -1 ||
           x.judul.toLowerCase().indexOf(keywords) > -1 ||
-          x.tujuan.toLowerCase().indexOf(keywords) > -1
+          x.tujuan.toLowerCase().indexOf(keywords) > -1 ||
+          x.nik.indexOf(keywords) > -1
         ) {
+          return x;
+        }
+      });
+    }
+
+    if (valueStatus !== "all") {
+      dt = dt.filter((x) => {
+        if (x.status.toLowerCase() === valueStatus) {
           return x;
         }
       });
@@ -100,9 +113,16 @@ const Laporan = () => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return dt.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, inbox, keywords, value.startDate, value.endDate]);
+  }, [
+    currentPage,
+    inbox,
+    keywords,
+    value.startDate,
+    value.endDate,
+    valueStatus,
+  ]);
 
-  console.log("currentTableData: ", currentTableData);
+  // console.log("currentTableData: ", currentTableData);
   const filteringData = (e) => {
     let keyword = e.currentTarget.value.toLowerCase();
     setKeywords(keyword);
@@ -464,6 +484,8 @@ const Laporan = () => {
               withDateFilter={true}
               handleValueChange={handleValueChange}
               value={value}
+              handleStatusChange={handleStatusChange}
+              valueStatus={valueStatus}
             />
             <table className="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
@@ -485,6 +507,12 @@ const Laporan = () => {
                     className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
                   >
                     Subject
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-base text-center font-bold text-gray-500 uppercase"
+                  >
+                    NIK
                   </th>
                   <th
                     scope="col"
@@ -542,6 +570,9 @@ const Laporan = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.tujuan}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                        {item.nik}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.nama}

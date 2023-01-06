@@ -22,6 +22,7 @@ const NotFound = React.lazy(() => import("./pages/notfound"));
 const Admin = React.lazy(() => import("./pages/admin/admin"));
 const Create = React.lazy(() => import("./pages/create"));
 const InputSurat = React.lazy(() => import("./pages/admin/inputsurat"));
+const LandingPage = React.lazy(() => import("./pages/landingpage.jsx"));
 
 function App() {
   // init custom history object to allow navigation from
@@ -39,11 +40,12 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="/landingpage" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/notfound" element={<NotFound />} />
       <Route path="/tracking" element={<Tracking />} />
       <Route path="/create" element={<Create />} />
-      <Route path="*" element={ <Navigate to="/notfound" replace />} />
+      <Route path="*" element={<Navigate to="/notfound" replace />} />
     </Routes>
   );
 }
