@@ -81,7 +81,7 @@ const SuratMasuk = () => {
   }, [inbox]);
 
   const currentTableData = useMemo(() => {
-    let dt = inbox;
+    let dt = [...inbox];
     if (keywords) {
       dt = dt.filter((x) => {
         if (
@@ -95,6 +95,11 @@ const SuratMasuk = () => {
       });
     }
     setTotalData(dt.length);
+    if (dt.length > 1) {
+      dt.sort(function (x, y) {
+        return y.id - x.id;
+      });
+    }
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return dt.slice(firstPageIndex, lastPageIndex);
@@ -417,6 +422,28 @@ const SuratMasuk = () => {
                 <div>
                   <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
                     <label
+                      htmlFor="tujuan"
+                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                    >
+                      Kepada
+                    </label>
+                    <select
+                      ref={kepadaRef}
+                      class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                    >
+                      <option value="0" selected>
+                        Please Select
+                      </option>
+                      <option value="B1">Admin Walikota</option>
+                      <option value="B2">Admin Wakil Walikota</option>
+                      <option value="B3">Admin Sekot</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                    <label
                       htmlFor="keterangan"
                       className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
                     >
@@ -489,40 +516,42 @@ const SuratMasuk = () => {
   };
 
   const handlePostAction = () => {
-    if (url) {
-      let payload = {
-        id: Number(detail.id), // id surat
-        destination:
-          role !== "A"
-            ? "F"
-            : detail.tujuan.indexOf("sekot") > -1
-            ? "B3"
-            : detail.tujuan.indexOf("wakil") > -1
-            ? "B2"
-            : "B1", // kepadaRef.current.value, // Admin Walikota
-        keterangan: keteranganRef.current.value,
-        lampiran: url,
-      };
-      let contentWA = "";
-      if (role === "A") {
-        delete payload.lampiran;
-        contentWA = wording.tracking
-          .replace("#url", window.location.origin)
-          .replace("#no", detail.no_surat);
-      } else {
-        contentWA = wording.tracking.replace("#download", url);
-      }
-
-      dispatch(toogleLoading(true));
-      dispatch(postActionSurat(payload));
-      dispatch(toogleLoading(false));
+    // if (url) {
+    dispatch(toogleLoading(true));
+    let des =
+      role !== "A"
+        ? "F"
+        : detail.tujuan.indexOf("sekot") > -1
+        ? "B3"
+        : detail.tujuan.indexOf("wakil") > -1
+        ? "B2"
+        : "B1";
+    let payload = {
+      id: Number(detail.id), // id surat
+      destination:
+        kepadaRef.current.value === "0" ? des : kepadaRef.current.value,
+      keterangan: keteranganRef.current.value,
+      lampiran: url,
+    };
+    let contentWA = "";
+    if (role === "A") {
+      delete payload.lampiran;
+      contentWA = wording.tracking
+        .replace("#url", window.location.origin)
+        .replace("#no", detail.no_surat);
     } else {
-      MySwal.fire({
-        title: <strong>Validation!</strong>,
-        html: "Harap Masukkan foto atau hasil scan surat balasan.",
-        icon: "warning",
-      });
+      contentWA = wording.tracking.replace("#download", url);
     }
+
+    dispatch(postActionSurat(payload));
+    dispatch(toogleLoading(false));
+    // } else {
+    //   MySwal.fire({
+    //     title: <strong>Validation!</strong>,
+    //     html: "Harap Masukkan foto atau hasil scan surat balasan.",
+    //     icon: "warning",
+    //   });
+    // }
   };
 
   return (
@@ -535,7 +564,7 @@ const SuratMasuk = () => {
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
-            <SearchBox filteringData={filteringData} />
+            <SearchBox filteringData={filteringData} isReport={false} />
             <table className="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>

@@ -12,7 +12,7 @@ import {
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 
-const LandingPage = () => {
+const SelamatDatang = () => {
   const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -58,11 +58,11 @@ const LandingPage = () => {
             <section className="grid justify-items-center mb-3">
               <img src={LogoImage} className="w-28 h-auto text-center" />
             </section>
-            <div className="header-card flex flex-col justify-center items-center font-medium text-xl mb-4">
-              <p>Selamat Datang</p>
-              <p>di</p>
-              <p>Unit Layanan Administrasi</p>
-              <p>Pemkot Bitung</p>
+            <div className="header-card flex flex-col justify-center items-center font-medium text-3xl mb-4">
+              <p className="font-light">Selamat Datang</p>
+              <p className="font-light">di</p>
+              <p className="font-light">Unit Layanan Administrasi</p>
+              <p><span className="font-light">Pemerintahan</span> <span  className="font-semibold">Kota Bitung</span></p>
             </div>
           </div>
           <div className="flex">
@@ -89,4 +89,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default SelamatDatang;

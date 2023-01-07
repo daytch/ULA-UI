@@ -61,6 +61,11 @@ const SuratKeluar = () => {
         }
       });
     }
+    if (dt.length > 1) {
+      dt.sort(function (x, y) {
+        return y.id - x.id ;
+      });
+    }
     setTotalData(dt.length);
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -450,7 +455,7 @@ const SuratKeluar = () => {
           <div className="overflow-hidden">
             <div className="hidden print:block z-50">{receipt}</div>
 
-            <SearchBox filteringData={filteringData} />
+            <SearchBox filteringData={filteringData} isReport={false} />
             <table className="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>

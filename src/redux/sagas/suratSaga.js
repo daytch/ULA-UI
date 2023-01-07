@@ -64,8 +64,8 @@ export function* postActionSurat(action) {
   try {
     const data = action.payload;
     const res = yield call(POST, URL.ACTION_MAIL, data);
-
-    if (res.message.toLowerCase().indexOf("success") === -1) {
+    
+    if (res) {
       yield put(
         postActionSuratFailure({
           isError: 1,

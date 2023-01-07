@@ -11,6 +11,7 @@ const SearchBox = (props) => {
     value,
     handleStatusChange,
     valueStatus,
+    isReport,
   } = props;
   const searchRef = useRef();
   const handleUserKeyPress = useCallback((event) => {
@@ -60,34 +61,36 @@ const SearchBox = (props) => {
           </svg>
         </div>
       </div>
-      <div className="lg:w-[33rem] inline-flex align-middle mr-4">
-        <div className="w-36">
-          <label className="text-xs font-light">Status</label>
-          <select
-            value={valueStatus}
-            onChange={handleStatusChange}
-            className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-          >
-            <option value="all">All</option>
-            <option value="done">Done</option>
-            <option value="on progress">On Progress</option>
-          </select>
-        </div>
+      {isReport ? (
+        <div className="lg:w-[33rem] inline-flex align-middle mr-4">
+          <div className="w-36">
+            <label className="text-xs font-light">Status</label>
+            <select
+              value={valueStatus}
+              onChange={handleStatusChange}
+              className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+            >
+              <option value="all">All</option>
+              <option value="done">Done</option>
+              <option value="on progress">On Progress</option>
+            </select>
+          </div>
 
-        <div className="mx-4">
-          <label className="text-xs font-light">Tanggal Pegiriman</label>
-          <Datepicker value={value} onChange={handleValueChange} />
-        </div>
+          <div className="mx-4">
+            <label className="text-xs font-light">Tanggal Pegiriman</label>
+            <Datepicker value={value} onChange={handleValueChange} />
+          </div>
 
-        <div>
-          <button
-            data-hs-overlay="#hs-medium-modal"
-            className="lg:mt-6 py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-          >
-            <ArrowDownOnSquareIcon className="w-4 h-4" /> Export
-          </button>
+          <div>
+            <button
+              data-hs-overlay="#hs-medium-modal"
+              className="lg:mt-6 py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+            >
+              <ArrowDownOnSquareIcon className="w-4 h-4" /> Export
+            </button>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

@@ -11,7 +11,7 @@ function PrivateRoute({ children }) {
 
   if (isObjectEmpty(data)) {
     // not logged in so redirect to login page with the return url
-    return <Navigate to="/landingpage" state={{ from: history.location }} />;
+    return <Navigate to="/selamatdatang" state={{ from: history.location }} />;
   }
 
   // authorized so return child components
