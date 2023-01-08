@@ -48,7 +48,7 @@ const SuratKeluar = () => {
   }, [outbox]);
 
   const currentTableData = useMemo(() => {
-    let dt = outbox;
+    let dt = [...outbox];
     if (keywords) {
       dt = dt.filter((x) => {
         if (
@@ -63,7 +63,7 @@ const SuratKeluar = () => {
     }
     if (dt.length > 1) {
       dt.sort(function (x, y) {
-        return y.id - x.id ;
+        return y.id - x.id;
       });
     }
     setTotalData(dt.length);
