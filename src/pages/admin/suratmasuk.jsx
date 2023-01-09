@@ -45,13 +45,16 @@ const SuratMasuk = () => {
     window.addEventListener("close.hs.overlay", (e) => {
       setUrl("");
       setDetail({});
+      dispatch(getInbox());
     });
     dispatch(getInbox());
   });
 
   const inbox = useSelector((state) => state.Surat.inbox);
   const master = useSelector((state) => state.Surat.inbox);
-
+  const loading = useSelector((state) => state.Surat.loading);
+  const isSuccess = useSelector((state) => state.Surat.isSuccess);
+  console.log("inbox:", inbox);
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
     e.preventDefault();
@@ -79,10 +82,6 @@ const SuratMasuk = () => {
       dispatch(toogleLoading(false));
     }
   };
-
-  useEffect(() => {
-    console.log("detail:", detail);
-  }, [detail]);
 
   useEffect(() => {
     setFilteredData(inbox);
@@ -122,7 +121,7 @@ const SuratMasuk = () => {
     var filename = url.split("/").pop();
     FileSaver.saveAs(url, filename);
   };
-
+  
   const renderModal = () => {
     return (
       <div
@@ -168,7 +167,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.nama}
+                      value={detail.nama || ""}
                       id="nama"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Nama"
@@ -188,7 +187,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="number"
-                      value={detail.nik}
+                      value={detail.nik || ""}
                       id="nik"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="NIK"
@@ -208,7 +207,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="number"
-                      value={detail.no_hp}
+                      value={detail.no_hp || ""}
                       id="phone"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Phone"
@@ -228,7 +227,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="email"
-                      value={detail.email}
+                      value={detail.email || ""}
                       id="email"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Email"
@@ -248,7 +247,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.tujuan}
+                      value={detail.tujuan || ""}
                       id="tujuan"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Tujuan"
@@ -268,7 +267,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.judul}
+                      value={detail.judul || ""}
                       id="judul"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Judul"
@@ -379,7 +378,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.tujuan}
+                      value={detail.tujuan || ""}
                       id="tujuan"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Tujuan"
@@ -399,7 +398,7 @@ const SuratMasuk = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.judul}
+                      value={detail.judul || ""}
                       id="judul"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Judul"
@@ -438,11 +437,10 @@ const SuratMasuk = () => {
                       </label>
                       <select
                         ref={kepadaRef}
+                        defaultValue="0"
                         className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       >
-                        <option value="0" selected>
-                          Please Select
-                        </option>
+                        <option value="0">Please Select</option>
                         <option value="B1">Admin Walikota</option>
                         <option value="B2">Admin Wakil Walikota</option>
                         <option value="B3">Admin Sekot</option>
@@ -525,9 +523,17 @@ const SuratMasuk = () => {
     );
   };
 
+  useEffect(() => {
+    dispatch(toogleLoading(loading));
+
+    if (isSuccess && !loading) {
+      dispatch(getInbox());
+    }
+  }, [loading]);
+
   const handlePostAction = () => {
     // if (url) {
-    dispatch(toogleLoading(true));
+    // dispatch(toogleLoading(true));
     let des =
       role !== "A"
         ? "F"
@@ -557,7 +563,7 @@ const SuratMasuk = () => {
     }
 
     dispatch(postActionSurat(payload));
-    dispatch(toogleLoading(false));
+    // dispatch(toogleLoading(false));
     // } else {
     //   MySwal.fire({
     //     title: <strong>Validation!</strong>,

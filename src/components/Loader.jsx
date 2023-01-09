@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Loader = (props) => {
   const { isLoading } = props;
-  console.log("isLoading:", isLoading);
+  
   return isLoading ? (
     <div className="grid fixed h-full min-w-full items-center justify-items-center z-[1000] bg-blue-100 bg-opacity-20 backdrop-blur-sm drop-shadow-lg">
       <Dna

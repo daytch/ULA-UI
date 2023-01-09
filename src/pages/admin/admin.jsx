@@ -12,7 +12,7 @@ import Loader from "../../components/Loader";
 const Admin = () => {
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
   const loading = useSelector((state) => state.Dashboard.loading);
-  console.log("loading:", loading);
+  
   const renderMenu = () => {
     return isActive.dashboard ? (
       <Dashboard />

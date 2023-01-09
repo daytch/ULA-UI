@@ -12,6 +12,7 @@ export const suratSlice = createSlice({
     error: "",
     message: "",
     token: "",
+    isSuccess: false,
   },
   reducers: {
     postSubmitSurat: (state) => {
@@ -49,15 +50,18 @@ export const suratSlice = createSlice({
 
     postActionSurat: (state) => {
       state.loading = true;
+      state.isSuccess = false;
     },
     postActionSuratSuccess: (state, action) => {
       state.data = action.payload.data;
       state.message = action.payload.message;
       state.loading = false;
+      state.isSuccess = true;
     },
     postActionSuratFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
+      state.isSuccess = false;
     },
 
     getTracking: (state) => {
