@@ -1,7 +1,11 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import SearchBox from "../../components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffectOnce, convertDate } from "../../functions/index.js";
+import {
+  useEffectOnce,
+  convertDate,
+  isEmptyNullOrUndefined,
+} from "../../functions/index.js";
 import { getInbox, postActionSurat } from "../../redux/slices/suratSlice.js";
 import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
@@ -54,7 +58,7 @@ const SuratMasuk = () => {
     const formData = new FormData();
     const image = e.target.files[0];
 
-    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
+    if (image.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
@@ -65,9 +69,13 @@ const SuratMasuk = () => {
           dispatch(toogleLoading(false));
         });
     } else {
-      let er = error;
-      er.lampiran = true;
-      setError(er);
+      // let er = error;
+      // er.lampiran = true;
+      // setError(er);
+      setError((prevState) => ({
+        ...prevState,
+        lampiran: true,
+      }));
       dispatch(toogleLoading(false));
     }
   };
@@ -419,27 +427,29 @@ const SuratMasuk = () => {
                   </div>
                 </div>
 
-                <div>
-                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
-                    <label
-                      htmlFor="tujuan"
-                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
-                    >
-                      Kepada
-                    </label>
-                    <select
-                      ref={kepadaRef}
-                      class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                    >
-                      <option value="0" selected>
-                        Please Select
-                      </option>
-                      <option value="B1">Admin Walikota</option>
-                      <option value="B2">Admin Wakil Walikota</option>
-                      <option value="B3">Admin Sekot</option>
-                    </select>
+                {role === "A" && (
+                  <div>
+                    <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                      <label
+                        htmlFor="tujuan"
+                        className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                      >
+                        Kepada
+                      </label>
+                      <select
+                        ref={kepadaRef}
+                        className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      >
+                        <option value="0" selected>
+                          Please Select
+                        </option>
+                        <option value="B1">Admin Walikota</option>
+                        <option value="B2">Admin Wakil Walikota</option>
+                        <option value="B3">Admin Sekot</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div>
                   <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
@@ -529,7 +539,10 @@ const SuratMasuk = () => {
     let payload = {
       id: Number(detail.id), // id surat
       destination:
-        kepadaRef.current.value === "0" ? des : kepadaRef.current.value,
+        kepadaRef?.current?.value === "0" ||
+        isEmptyNullOrUndefined(kepadaRef?.current)
+          ? des
+          : kepadaRef.current.value,
       keterangan: keteranganRef.current.value,
       lampiran: url,
     };

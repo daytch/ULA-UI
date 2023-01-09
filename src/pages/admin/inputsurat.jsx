@@ -102,13 +102,13 @@ const InputSurat = () => {
     }
     dispatch(toogleLoading(false));
   }
-  function onChangeTujuan(e) {}
+  
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
+    if (image.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
@@ -119,9 +119,13 @@ const InputSurat = () => {
           dispatch(toogleLoading(false));
         });
     } else {
-      let er = error;
-      er.lampiran = true;
-      setError(er);
+      // let er = error;
+      // er.lampiran = true;
+      // setError(er);
+      setError((prevState) => ({
+        ...prevState,
+        lampiran: true,
+      }));
       dispatch(toogleLoading(false));
     }
   };
@@ -277,7 +281,6 @@ const InputSurat = () => {
           <div className="relative">
             <select
               ref={tujuanRef}
-              // onChange={onChangeTujuan}
               className="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
             >
               <option value="0">Silahkan Pilih Tujuan</option>

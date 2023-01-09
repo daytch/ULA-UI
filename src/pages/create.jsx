@@ -98,8 +98,8 @@ const Create = () => {
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-
-    if (image.name.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
+    
+    if (image.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
 
@@ -111,9 +111,10 @@ const Create = () => {
         dispatch(toogleLoading(false));
       });
     } else {
-      let er = error;
-      er.lampiran = true;
-      setError(er);
+      setError((prevState) => ({
+        ...prevState,
+        lampiran: true,
+      }));
       dispatch(toogleLoading(false));
     }
   };
@@ -364,12 +365,20 @@ const Create = () => {
                 ) : null}
               </div>
               {error.lampiran ? (
-                <p
-                  className="flex text-xs text-red-600 mt-2"
-                  id="small-file-input-error"
-                >
-                  Lampiran wajib diisi dengan file gambar.
-                </p>
+                <>
+                  <p
+                    className="flex text-xs text-red-600 mt-2"
+                    id="small-file-input-error"
+                  >
+                    Lampiran wajib diisi dengan file dengan ekstensi berikut :
+                  </p>
+                  <p
+                    className="flex text-xs text-red-600"
+                    id="small-file-input-error"
+                  >
+                    <b>jpg, jpeg, png, gif atau pdf.</b>
+                  </p>
+                </>
               ) : null}
             </div>
 

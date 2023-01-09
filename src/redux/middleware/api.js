@@ -34,8 +34,12 @@ api.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
-      localStorage.clear();
-      window.location.href = "/login";
+      if (error.response.data.message.toLowerCase() === "invalid token") {
+        localStorage.clear();
+        window.location.href = "/login";
+      }
+    } else {
+      return error.response.data;
     }
     return Promise.reject(error);
   }

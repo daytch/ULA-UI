@@ -12,7 +12,7 @@ import Loader from "../../components/Loader";
 const Admin = () => {
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
   const loading = useSelector((state) => state.Dashboard.loading);
-
+  console.log("loading:", loading);
   const renderMenu = () => {
     return isActive.dashboard ? (
       <Dashboard />
@@ -37,12 +37,6 @@ const Admin = () => {
       <div className="w-full pt-10 px-4 sm:px-6 md:px-8 lg:pl-72">
         {renderMenu()}
       </div>
-      {/* <!-- End Content --> */}
-      {/* <!-- ========== END MAIN CONTENT ========== --> */}
-
-      {/* <!-- ========== SECONDARY CONTENT ========== --> */}
-
-      {/* <!-- ========== END SECONDARY CONTENT ========== --> */}
     </>
   );
 };

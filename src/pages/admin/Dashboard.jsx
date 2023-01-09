@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Header from "./../../components/Header";
 import Sidebar from "./../../components/Sidebar";
 import { useEffectOnce, isObjectEmpty } from "./../../functions";
-import { getData } from "../../redux/slices/dashboardSlice.js";
+import { getData, toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Chart as ChartJS,
@@ -39,29 +39,38 @@ const Dashboard = () => {
   ];
 
   const dispatch = useDispatch();
-  const [data, setData] = useState({
-    labels: labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Dataset 2",
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  });
+  // const [data, setData] = useState({
+  //   labels: labels,
+  //   datasets: [
+  //     {
+  //       label: "Dataset 1",
+  //       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  //       borderColor: "rgb(255, 99, 132)",
+  //       backgroundColor: "rgba(255, 99, 132, 0.5)",
+  //     },
+  //     {
+  //       label: "Dataset 2",
+  //       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  //       borderColor: "rgb(53, 162, 235)",
+  //       backgroundColor: "rgba(53, 162, 235, 0.5)",
+  //     },
+  //   ],
+  // });
 
-  useEffect(() => {
+  const loading = useSelector((state) => state.Dashboard.loading);
+
+  useEffectOnce(() => {
     dispatch(getData());
-  }, []);
+    dispatch(toogleLoading(false));
+  });
+  // useEffect(() => {
+  //   dispatch(getData());
+  // }, []);
 
-  const dt = useSelector((state) => state.Dashboard.data);
+  const data = useSelector((state) => state.Dashboard.data);
+  const dt = useSelector((state) => state.Dashboard.dt);
+  console.log("dt:", dt);
+  console.log("data:", data);
   const options = {
     responsive: true,
     plugins: {
@@ -75,42 +84,12 @@ const Dashboard = () => {
     },
   };
 
-  useEffect(() => {
-    if (!isObjectEmpty(dt)) {
-      let lbl = dt.suratmasuk.detail.map((x) => x.periode);
-      let dtMasuk = dt.suratmasuk.detail.map((x) => x.total);
-      let dtProses = dt.suratproses.detail.map((x) => x.total);
-      let dtSelesai = dt.suratselesai.detail.map((x) => x.total);
-      setData({
-        labels: lbl,
-        datasets: [
-          {
-            label: "Surat Masuk",
-            data: dtMasuk,
-            backgroundColor: "rgba(13, 238, 46, 0.2)",
-            borderColor: "rgba(13, 238, 46, 1)",
-            borderWidth: 1,
-          },
-          {
-            label: "Surat di Proses",
-            data: dtProses,
-            backgroundColor: "rgba(18, 13, 238, 0.2)",
-            borderColor: "rgba(18, 13, 238, 1)",
-            borderWidth: 1,
-          },
-          {
-            label: "Surat di Balas",
-            data: dtSelesai,
-            backgroundColor: "rgba(245, 12, 41, 0.3)",
-            borderColor: "rgba(245, 12, 41, 1)",
-            borderWidth: 1,
-          },
-        ],
-      });
-    }
-  }, [dt]);
+  // useEffect(() => {
+  //   if (!isObjectEmpty(data)) {
 
-  useEffectOnce(() => {});
+  //   }
+  //   console.log("data:", data);
+  // }, [data]);
 
   return (
     <header>
