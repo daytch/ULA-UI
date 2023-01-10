@@ -54,7 +54,7 @@ const SuratMasuk = () => {
   const master = useSelector((state) => state.Surat.inbox);
   const loading = useSelector((state) => state.Surat.loading);
   const isSuccess = useSelector((state) => state.Surat.isSuccess);
-  console.log("inbox:", inbox);
+
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
     e.preventDefault();

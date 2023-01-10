@@ -8,7 +8,11 @@ import { toogleLoading } from "../../redux/slices/dashboardSlice.js";
 import Pagination from "./../../components/Pagination";
 import wording from "../../assets/wording.json";
 import FileSaver from "file-saver";
-import { PrinterIcon, RocketLaunchIcon } from "@heroicons/react/24/outline";
+import {
+  PrinterIcon,
+  RocketLaunchIcon,
+  DocumentTextIcon,
+} from "@heroicons/react/24/outline";
 import {
   PDFViewer,
   Page,
@@ -47,6 +51,11 @@ const Laporan = () => {
 
   const inbox = useSelector((state) => state.Surat.inbox);
   const master = useSelector((state) => state.Surat.inbox);
+  const loading = useSelector((state) => state.Surat.loading);
+
+  useEffect(() => {
+    dispatch(toogleLoading(loading));
+  }, [loading]);
 
   const styles = StyleSheet.create({
     body: {
@@ -63,10 +72,6 @@ const Laporan = () => {
   useEffect(() => {
     setFilteredData(inbox);
   }, [inbox]);
-
-  useEffect(() => {
-    console.log("value: ", value);
-  }, [value]);
 
   const downloadFile = (url) => {
     var filename = url.split("/").pop();
@@ -129,7 +134,7 @@ const Laporan = () => {
   };
 
   const handlePostAction = () => {
-    dispatch(toogleLoading(true));
+    // dispatch(toogleLoading(true));
 
     let payload = {
       id: Number(detail.id), // id surat
@@ -137,7 +142,7 @@ const Laporan = () => {
       keterangan: keteranganRef.current.value,
     };
     dispatch(postActionSurat(payload));
-    dispatch(toogleLoading(false));
+    // dispatch(toogleLoading(false));
     window.open(
       "https://wa.me/" +
         detail.no_hp +
@@ -351,28 +356,29 @@ const Laporan = () => {
                     </button>
                   </div>
                 </div>
-
-                <div>
-                  <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
-                    <label
-                      htmlFor="lampiran"
-                      className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
-                    >
-                      Surat Balasan
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => downloadFile(detail.lampiran)}
-                      className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                    >
-                      Download
-                    </button>
+                {detail.statu === "F" && (
+                  <div>
+                    <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
+                      <label
+                        htmlFor="lampiran"
+                        className="block text-sm font-medium mb-2 lg:w-32 dark:text-white"
+                      >
+                        Surat Balasan
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => downloadFile(detail.lampiran)}
+                        className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                      >
+                        Download
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
-              <button
+              {/* <button
                 type="button"
                 onClick={handleSendTandaTerima}
                 className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
@@ -388,7 +394,7 @@ const Laporan = () => {
               >
                 <PrinterIcon className="h-5 w-5" />
                 Print
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
@@ -539,6 +545,12 @@ const Laporan = () => {
                   >
                     Status
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-base font-bold text-gray-500 uppercase"
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -594,6 +606,24 @@ const Laporan = () => {
                             Done
                           </span>
                         )}
+                      </td>
+                      <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                        <div className="hs-tooltip inline-block [--placement:right] mx-1">
+                          <a
+                            className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
+                            href="#"
+                            data-hs-overlay="#hs-vertically-centered-scrollable-modal"
+                            onClick={() => setDetail(item)}
+                          >
+                            <DocumentTextIcon className="h-5 w-5 text-blue-500" />
+                            <span
+                              className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip"
+                            >
+                              View Document
+                            </span>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                   );
