@@ -356,7 +356,7 @@ const Laporan = () => {
                     </button>
                   </div>
                 </div>
-                {detail.statu === "F" && (
+                {detail.status.toLowerCase() === "done" && (
                   <div>
                     <div className="sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full">
                       <label
