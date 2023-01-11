@@ -40,7 +40,7 @@ const Create = () => {
 
   const loading = useSelector((state) => state.Surat.loading);
   const message = useSelector((state) => state.Surat.message);
-  const error = useSelector((state) => state.Surat.error);
+  const errorSaga = useSelector((state) => state.Surat.error);
 
   useEffect(() => {
     if (message) {
@@ -51,14 +51,14 @@ const Create = () => {
       }).then(() => {
         formRef.current.reset();
       });
-    } else if (error) {
+    } else if (errorSaga) {
       MySwal.fire({
         title: <strong>Failed!</strong>,
-        html: error,
+        html: errorSaga,
         icon: "error",
       });
     }
-  }, [loading, message, error]);
+  }, [message, errorSaga]);
 
   function handleSubmit(e) {
     e.preventDefault();
