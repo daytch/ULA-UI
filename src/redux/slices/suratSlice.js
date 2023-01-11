@@ -22,11 +22,13 @@ export const suratSlice = createSlice({
     postSubmitSuratSuccess: (state, action) => {
       state.data = action.payload.data;
       state.message = "Data berhasil di save";
+      state.error = "";
       state.loading = false;
     },
     postSubmitSuratFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.message = "";
+      state.error = "Data gagal disimpan.";
       state.message = "";
     },
 
@@ -40,11 +42,13 @@ export const suratSlice = createSlice({
       state.message =
         "Data berhasil di save. Silahkan simpan no surat anda: " +
         data.no_surat;
+      state.error = "";
       state.loading = false;
     },
     postSelfServiceFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.message = "";
+      state.error = "Data gagal di simpan.";
       state.message = "";
     },
 
@@ -54,13 +58,15 @@ export const suratSlice = createSlice({
     },
     postActionSuratSuccess: (state, action) => {
       state.data = action.payload.data;
-      state.message = action.payload.message;
+      state.message = "Data berhasil di save";
+      state.error = "";
       state.loading = false;
       state.isSuccess = true;
     },
     postActionSuratFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.message = "";
+      state.error = "Data gagal di save";
       state.isSuccess = false;
     },
 
@@ -71,7 +77,6 @@ export const suratSlice = createSlice({
       state.tracking = action.payload.res;
       state.message = action.payload.message;
       state.loading = false;
-      console.log("state.tracking:", state.tracking);
     },
     getTrackingFailure: (state, action) => {
       state.loading = false;
@@ -83,12 +88,12 @@ export const suratSlice = createSlice({
     },
     getInboxSuccess: (state, action) => {
       state.inbox = action.payload.res;
-      state.message = action.payload.message;
+      // state.message = action.payload.message;
       state.loading = false;
     },
     getInboxFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      // state.error = action.payload.message;
     },
 
     getOutbox: (state) => {
@@ -96,7 +101,7 @@ export const suratSlice = createSlice({
     },
     getOutboxSuccess: (state, action) => {
       state.outbox = action.payload.res;
-      state.message = action.payload.message;
+      state.message = action.payload.res.message;
       state.loading = false;
     },
     getOutboxFailure: (state, action) => {

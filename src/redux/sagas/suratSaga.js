@@ -65,11 +65,11 @@ export function* postActionSurat(action) {
     const data = action.payload;
     const res = yield call(POST, URL.ACTION_MAIL, data);
     
-    if (res) {
+    if (!res.isSuccess) {
       yield put(
         postActionSuratFailure({
           isError: 1,
-          message: res.ErrorMessage,
+          error: res.message,
         })
       );
     } else {
@@ -107,7 +107,7 @@ export function* getOutbox() {
       yield put(
         getOutboxFailure({
           isError: 1,
-          message: res.ErrorMessage,
+          message: res.message,
         })
       );
     } else {

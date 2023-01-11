@@ -33,11 +33,6 @@ const SuratMasuk = () => {
   const [url, setUrl] = useState("");
   const role = JSON.parse(localStorage.getItem("userData")).role;
 
-  // console.log("detail:", detail);
-  // console.log("filteredData:", filteredData);
-  // console.log("keywords:", keywords);
-  // console.log("url:", url);
-
   const kepadaRef = useRef();
   const keteranganRef = useRef();
 
@@ -53,7 +48,30 @@ const SuratMasuk = () => {
   const inbox = useSelector((state) => state.Surat.inbox);
   const master = useSelector((state) => state.Surat.inbox);
   const loading = useSelector((state) => state.Surat.loading);
+  const message = useSelector((state) => state.Surat.message);
+  const error = useSelector((state) => state.Surat.error);
   const isSuccess = useSelector((state) => state.Surat.isSuccess);
+
+  useEffect(() => {
+    if (message) {
+      MySwal.fire({
+        title: <strong>Success!</strong>,
+        html: message,
+        icon: "success",
+      });
+      dispatch(toogleLoading(false));
+    } else if (error) {
+      MySwal.fire({
+        title: <strong>Failed!</strong>,
+        html: error,
+        icon: "error",
+      });
+      dispatch(toogleLoading(false));
+    }
+    dispatch(getInbox());
+    console.log("message:", message);
+    console.log("error:", error);
+  }, [message, error]);
 
   const changeUploadFile = async (e) => {
     dispatch(toogleLoading(true));
@@ -541,13 +559,13 @@ const SuratMasuk = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(toogleLoading(loading));
+  // useEffect(() => {
+  //   dispatch(toogleLoading(loading));
 
-    if (isSuccess && !loading) {
-      dispatch(getInbox());
-    }
-  }, [loading]);
+  //   if (isSuccess && !loading) {
+  //     dispatch(getInbox());
+  //   }
+  // }, [loading]);
 
   const handlePostAction = () => {
     // if (url) {

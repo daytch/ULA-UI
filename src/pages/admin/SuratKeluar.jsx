@@ -42,6 +42,11 @@ const SuratKeluar = () => {
 
   const outbox = useSelector((state) => state.Surat.outbox);
   const master = useSelector((state) => state.Surat.outbox);
+  const loading = useSelector((state) => state.Surat.loading);
+
+  useEffect(() => {
+    dispatch(toogleLoading(loading));
+  }, [loading]);
 
   useEffect(() => {
     setFilteredData(outbox);
