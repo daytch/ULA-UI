@@ -87,6 +87,10 @@ const Create = () => {
       !err.judul &&
       !err.lampiran
     ) {
+      pl.no_hp =
+        String(pl.no_hp).substring(0, 1) === "0"
+          ? Number("+62" + String(pl.no_hp).substring(1))
+          : pl.no_hp;
       dispatch(postSelfService({ data: pl }));
     } else {
       setError({ ...error, err });
@@ -98,7 +102,7 @@ const Create = () => {
     e.preventDefault();
     const formData = new FormData();
     const image = e.target.files[0];
-    
+
     if (image.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
       formData.append("file", image);
       formData.append("upload_preset", "pemkot_bitung");
