@@ -229,7 +229,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.nama}
+                      value={detail.nama || ""}
                       id="nama"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Nama"
@@ -249,7 +249,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="number"
-                      value={detail.nik}
+                      value={detail.nik || ""}
                       id="nik"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="NIK"
@@ -269,7 +269,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="number"
-                      value={detail.no_hp}
+                      value={detail.no_hp || ""}
                       id="phone"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Phone"
@@ -289,7 +289,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="email"
-                      value={detail.email}
+                      value={detail.email || ""}
                       id="email"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Email"
@@ -309,7 +309,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.tujuan}
+                      value={detail.tujuan || ""}
                       id="tujuan"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Tujuan"
@@ -329,7 +329,7 @@ const Laporan = () => {
                     </label>
                     <input
                       type="text"
-                      value={detail.judul}
+                      value={detail.judul || ""}
                       id="judul"
                       className="lg:w-[31rem] py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       placeholder="Judul"
@@ -354,6 +354,15 @@ const Laporan = () => {
                     >
                       Download
                     </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        window.open(detail.lampiran, "_blank").focus()
+                      }
+                      className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Preview
+                    </button>
                   </div>
                 </div>
                 {detail.status?.toLowerCase() === "done" && (
@@ -367,10 +376,32 @@ const Laporan = () => {
                       </label>
                       <button
                         type="button"
-                        onClick={() => downloadFile(detail.lampiran)}
+                        onClick={() => {
+                          if (detail.suratAttachment.length > 0) {
+                            downloadFile(detail.suratAttachment[0].lampiran);
+                          }
+                        }}
+                        disabled={detail.suratAttachment.length < 1}
                         className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                       >
                         Download
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (detail.suratAttachment.length > 0) {
+                            window
+                              .open(
+                                detail.suratAttachment[0].lampiran,
+                                "_blank"
+                              )
+                              .focus();
+                          }
+                        }}
+                        disabled={detail.suratAttachment.length < 1}
+                        className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                      >
+                        Preview
                       </button>
                     </div>
                   </div>
@@ -579,10 +610,10 @@ const Laporan = () => {
                         {item.no_surat}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                        {item.judul}
+                        {item.tujuan}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                        {item.tujuan}
+                        {item.judul}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.nik}

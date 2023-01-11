@@ -10,6 +10,7 @@ import {
   FingerPrintIcon,
   DocumentArrowUpIcon,
   RocketLaunchIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
 const SelamatDatang = () => {
@@ -62,7 +63,10 @@ const SelamatDatang = () => {
               <p className="font-light">Selamat Datang</p>
               <p className="font-light">di</p>
               <p className="font-light">Unit Layanan Administrasi</p>
-              <p><span className="font-light">Pemerintahan</span> <span  className="font-semibold">Kota Bitung</span></p>
+              <p>
+                <span className="font-light">Pemerintahan</span>{" "}
+                <span className="font-semibold">Kota Bitung</span>
+              </p>
             </div>
           </div>
           <div className="flex">
@@ -74,6 +78,16 @@ const SelamatDatang = () => {
               Upload Mandiri
               <DocumentArrowUpIcon className="h-5 w-5" />
             </a>
+            <a
+              href="/tracking"
+              type="button"
+              className="w-full mx-4 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+            >
+              Cek Status Surat
+              <MagnifyingGlassIcon className="h-5 w-5" />
+            </a>
+          </div>
+          <div className="flex mt-4 ml-3">
             <a
               href="/login"
               type="button"

@@ -252,6 +252,15 @@ const SuratKeluar = () => {
                     >
                       Download
                     </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        window.open(detail.lampiran, "_blank").focus()
+                      }
+                      className="lg:w-[31rem] py-2 px-3 block w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Preview
+                    </button>
                   </div>
                 </div>
 
@@ -514,10 +523,10 @@ const SuratKeluar = () => {
                         {item.no_surat}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                        {item.judul}
+                        {item.tujuan}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                        {item.tujuan}
+                        {item.judul}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                         {item.nik}
@@ -565,7 +574,7 @@ const SuratKeluar = () => {
                             </div>
                           </>
                         ) : null}
-                        
+
                         <div className="hs-tooltip inline-block [--placement:right] mx-1">
                           <a
                             className="hs-tooltip-toggle text-blue-500 hover:text-blue-700"
