@@ -66,6 +66,16 @@ const SuratKeluar = () => {
         }
       });
     }
+    if (role !== "A") {
+      dt = dt.filter((x) => {
+        if (
+          x.suratLog.length > 0 &&
+          x.suratLog.map((a) => a.status).indexOf(role) > -1
+        ) {
+          return x;
+        }
+      });
+    }
     if (dt.length > 1) {
       dt.sort(function (x, y) {
         return y.id - x.id;
@@ -396,6 +406,14 @@ const SuratKeluar = () => {
     dispatch(toogleLoading(false));
   };
 
+  const mapStatus = {
+    A: "Sedang diproses oleh Admin Umum",
+    B1: "Sedang diproses oleh Admin Walikota",
+    B2: "Sedang diproses oleh Admin Wakil Walikota",
+    B3: "Sedang diproses oleh Admin Sekretaris Kota",
+    F: "Sudah selesai di proses oleh pihak terkait",
+  };
+
   const handleSendTandaTerima = (item) => {
     let payload = {
       id: Number(item.id), // id surat
@@ -416,13 +434,33 @@ const SuratKeluar = () => {
     if (role === "A") {
       delete payload.lampiran;
       contentWA = ContentWording.replace(
-        "#url",
+        "#url#",
         window.location.origin + "/tracking?no=" + item.no_surat
+      );
+      contentWA = ContentWording.replace("#admin_umum#", userData.email);
+      contentWA = ContentWording.replace("#no_surat#", item.no_surat);
+      contentWA = ContentWording.replace("#tujuan#", item.tujuan);
+      contentWA = ContentWording.replace(
+        "#tgl_kirim#",
+        convertDate(item.createdAt)
       );
     } else {
       ContentWording = wording.finished;
+
+      contentWA = ContentWording.replace("#nik#", item.nik);
+      contentWA = ContentWording.replace("#no_surat#", item.no_surat);
+      contentWA = ContentWording.replace("#tujuan#", item.tujuan);
       contentWA = ContentWording.replace(
-        "#download",
+        "#tgl_terima#",
+        convertDate(item.createdAt)
+      );
+      contentWA = ContentWording.replace(
+        "#tgl_selesai#",
+        item.tgl_selesai ? convertDate(item.tgl_selesai) : "-"
+      );
+      contentWA = ContentWording.replace("#status#", mapStatus[item.status]);
+      contentWA = ContentWording.replace(
+        "#url#",
         item.suratAttachment.length > 0 ? item.suratAttachment[0].lampiran : ""
       );
     }

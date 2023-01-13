@@ -7,12 +7,13 @@ import Input from "./InputSurat";
 import SuratKeluar from "./SuratKeluar";
 import SuratMasuk from "./SuratMasuk";
 import Laporan from "./Laporan";
+import ChangePassword from "./changepassword";
 import Loader from "../../components/Loader";
 
 const Admin = () => {
   const isActive = useSelector((state) => state.Dashboard.activeSidebarMenu);
   const loading = useSelector((state) => state.Dashboard.loading);
-  
+
   const renderMenu = () => {
     return isActive.dashboard ? (
       <Dashboard />
@@ -24,6 +25,8 @@ const Admin = () => {
       <SuratMasuk />
     ) : isActive.laporan ? (
       <Laporan />
+    ) : isActive.ganti ? (
+      <ChangePassword />
     ) : null;
   };
 

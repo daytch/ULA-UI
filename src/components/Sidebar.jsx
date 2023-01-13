@@ -20,6 +20,7 @@ const Sidebar = () => {
           masuk: false,
           keluar: false,
           laporan: false,
+          ganti: false,
         })
       );
     },
@@ -31,6 +32,7 @@ const Sidebar = () => {
           masuk: false,
           keluar: false,
           laporan: false,
+          ganti: false,
         })
       );
     },
@@ -42,6 +44,7 @@ const Sidebar = () => {
           masuk: true,
           keluar: false,
           laporan: false,
+          ganti: false,
         })
       );
     },
@@ -53,6 +56,7 @@ const Sidebar = () => {
           masuk: false,
           keluar: true,
           laporan: false,
+          ganti: false,
         })
       );
     },
@@ -64,6 +68,7 @@ const Sidebar = () => {
           masuk: false,
           keluar: false,
           laporan: true,
+          ganti: false,
         })
       );
     },

@@ -69,8 +69,6 @@ const SuratMasuk = () => {
       dispatch(toogleLoading(false));
     }
     dispatch(getInbox());
-    console.log("message:", message);
-    console.log("error:", error);
   }, [message, error]);
 
   const changeUploadFile = async (e) => {
@@ -115,6 +113,13 @@ const SuratMasuk = () => {
           x.tujuan.toLowerCase().indexOf(keywords) > -1 ||
           x.nik.indexOf(keywords) > -1
         ) {
+          return x;
+        }
+      });
+    }
+    if (role !== "A") {
+      dt = dt.filter((x) => {
+        if (x.status === role) {
           return x;
         }
       });

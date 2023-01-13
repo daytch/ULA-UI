@@ -69,8 +69,7 @@ const Dashboard = () => {
 
   const data = useSelector((state) => state.Dashboard.data);
   const dt = useSelector((state) => state.Dashboard.dt);
-  console.log("dt:", dt);
-  console.log("data:", data);
+  
   const options = {
     responsive: true,
     plugins: {

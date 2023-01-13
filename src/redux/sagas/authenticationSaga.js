@@ -7,6 +7,8 @@ import {
   postLoginSuccess,
   postCaptchaSuccess,
   postCaptchaFailure,
+  postChangePasswordFailure,
+  postChangePasswordSuccess,
 } from "../slices/authenticationSlice";
 import { history } from "../../helpers/history";
 
@@ -14,14 +16,15 @@ export function* postLogin(action) {
   try {
     const data = action.payload;
     const res = yield call(POST, URL.LOGIN, data);
-
-    if (res.message !== "User Found") {
+    
+    if (res.message === "Invalid Password") {
       yield put(
         postLoginFailure({
-          isError: 1,
-          message: res.ErrorMessage,
+          error: "Email atau Password anda tidak sesuai, mohon cek kembali.",
         })
       );
+    } else if (res.message !== "User Found") {
+      yield put(postLoginFailure({ error: res.message }));
     } else {
       let d = {
         token: res.token,
@@ -59,9 +62,29 @@ export function* postCapcay(action) {
   }
 }
 
+export function* postChangePassword(action) {
+  try {
+    const res = yield call(POST, URL.CHANGE_PASSWORD, action.payload);
+
+    if (res.message.toLowerCase().indexOf("success") === -1) {
+      yield put(
+        postChangePasswordFailure({
+          isError: 1,
+          message: res.message,
+        })
+      );
+    } else {
+      yield put(postChangePasswordSuccess({ res }));
+    }
+  } catch (error) {
+    yield put(postChangePasswordFailure({ isError: 1, error: error }));
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery("Authentication/postLogin", postLogin),
+    takeEvery("Authentication/postChangePassword", postChangePassword),
     takeEvery("Authentication/postCaptcha", postCapcay),
   ]);
 }

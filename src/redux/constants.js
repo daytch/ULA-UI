@@ -2,6 +2,7 @@ export const API_URL = "https://ula-api.herokuapp.com"; //"http://89.117.58.220:
 export const isProd = true;
 export const URL = {
   LOGIN: "/user/login",
+  CHANGE_PASSWORD: "/user/changePassword",
   REGISTER: "/user/register",
   DASHBOARD: "/dashboard",
   GET_INBOX: "/suratmasuk",

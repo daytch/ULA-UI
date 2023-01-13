@@ -41,6 +41,8 @@ const Laporan = () => {
 
   const handleValueChange = (newValue) => setValue(newValue);
   const handleStatusChange = (e) => setValueStatus(e.currentTarget.value);
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const role = userData.role;
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
@@ -93,6 +95,16 @@ const Laporan = () => {
       });
     }
 
+    if (role !== "A") {
+      dt = dt.filter((x) => {
+        if (
+          x.suratLog.length > 0 &&
+          x.suratLog.map((a) => a.status).indexOf(role) > -1
+        ) {
+          return x;
+        }
+      });
+    }
     if (valueStatus !== "all") {
       dt = dt.filter((x) => {
         if (x.status.toLowerCase() === valueStatus) {
@@ -133,33 +145,38 @@ const Laporan = () => {
     setKeywords(keyword);
   };
 
-  const handlePostAction = () => {
-    // dispatch(toogleLoading(true));
+  // const handlePostAction = () => {
+  //   let payload = {
+  //     id: Number(detail.id), // id surat
+  //     destination: kepadaRef.current.value, // Admin Walikota
+  //     keterangan: keteranganRef.current.value,
+  //   };
+  //   dispatch(postActionSurat(payload));
 
-    let payload = {
-      id: Number(detail.id), // id surat
-      destination: kepadaRef.current.value, // Admin Walikota
-      keterangan: keteranganRef.current.value,
-    };
-    dispatch(postActionSurat(payload));
-    // dispatch(toogleLoading(false));
-    window.open(
-      "https://wa.me/" +
-        detail.no_hp +
-        "/?text=" +
-        wording.tracking +
-        "" +
-        detail.id,
-      "_blank"
-    );
-  };
+  //   window.open(
+  //     "https://wa.me/" +
+  //       detail.no_hp +
+  //       "/?text=" +
+  //       wording.tracking +
+  //       "" +
+  //       detail.id,
+  //     "_blank"
+  //   );
+  // };
 
   const handleSendTandaTerima = () => {
     let contentWA = "";
     let ContentWording = wording.finished;
     contentWA = ContentWording.replace(
-      "#download",
+      "#url#",
       detail.suratAttachment[0].lampiran
+    );
+    contentWA = ContentWording.replace("#admin_umum#", userData.email);
+    contentWA = ContentWording.replace("#no_surat#", detail.no_surat);
+    contentWA = ContentWording.replace("#tujuan#", detail.tujuan);
+    contentWA = ContentWording.replace(
+      "#tgl_kirim#",
+      convertDate(detail.createdAt)
     );
 
     window.open(

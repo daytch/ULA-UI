@@ -1,7 +1,14 @@
 import Logout from "./../assets/icons8-logout-48.png";
+import {
+  ArrowRightOnRectangleIcon,
+  KeyIcon,
+} from "@heroicons/react/24/outline";
 import User from "./../assets/user.png";
+import { useDispatch } from "react-redux";
+import { changeActiveSidebarMenu } from "../redux/slices/dashboardSlice.js";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const username = JSON.parse(localStorage.getItem("userData")).email;
 
   return (
@@ -134,11 +141,32 @@ const Header = () => {
                     className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                     href="#"
                     onClick={() => {
+                      dispatch(
+                        changeActiveSidebarMenu({
+                          dashboard: false,
+                          input: false,
+                          masuk: false,
+                          keluar: false,
+                          laporan: false,
+                          ganti: true,
+                        })
+                      );
+                    }}
+                  >
+                    <KeyIcon className="h-5 w-5" />
+                    Change Password
+                  </a>
+                </div>
+                <div className=" py-2 first:pt-0 last:pb-0">
+                  <a
+                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                    href="#"
+                    onClick={() => {
                       localStorage.clear();
                       window.location.href = "/";
                     }}
                   >
-                    <img src={Logout} className="w-[16px] h-[16px]" />
+                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
                     Logout
                   </a>
                 </div>

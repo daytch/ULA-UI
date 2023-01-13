@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../helpers/history.js";
 import { isObjectEmpty } from "../functions/index.js";
 import Loader from "../components/Loader";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -26,8 +30,10 @@ const Login = () => {
   const token = useSelector((state) => state.Authentication.token);
   const data = useSelector((state) => state.Authentication.data);
   const loading = useSelector((state) => state.Authentication.loading);
+  const error = useSelector((state) => state.Authentication.error);
+
   const lsData = JSON.parse(localStorage.getItem("userData"));
-  
+
   useEffect(() => {
     if (!isObjectEmpty(lsData)) {
       history.navigate("/");
@@ -40,6 +46,16 @@ const Login = () => {
       }
     }
   }, [token, data]);
+
+  useEffect(() => {
+    if (error) {
+      MySwal.fire({
+        title: <strong>Failed!</strong>,
+        html: error,
+        icon: "error",
+      });
+    }
+  }, [error]);
 
   return (
     <>
