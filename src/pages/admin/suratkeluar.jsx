@@ -32,6 +32,7 @@ const SuratKeluar = () => {
   const [totalData, setTotalData] = useState(0);
   const [receipt, setReceipt] = useState(wording.tracking);
   const role = JSON.parse(localStorage.getItem("userData")).role;
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   const kepadaRef = useRef();
   const keteranganRef = useRef();
