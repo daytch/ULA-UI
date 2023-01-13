@@ -14,7 +14,7 @@ const Notfound = () => {
               aria-label="Brand"
             >
               <section className="grid justify-items-center">
-                <img src={LogoImage} className="w-28 h-auto text-center" />
+                <img src={LogoImage} className="w-28 h-auto text-center" alt="logo" />
               </section>
               <div className="header-card flex flex-col justify-center items-center font-medium text-xl">
                 <p>Layanan Surat</p>

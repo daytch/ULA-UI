@@ -57,7 +57,7 @@ const SelamatDatang = () => {
         <div className="lg:w-1/3 lg:h-[45%] bg-white p-5 rounded-xl bg-opacity-30 backdrop-filter backdrop-blur-sm mx-auto">
           <div className="flex flex-col justify-items-center">
             <section className="grid justify-items-center mb-3">
-              <img src={LogoImage} className="w-28 h-auto text-center" />
+              <img src={LogoImage} className="w-28 h-auto text-center" alt="logo" />
             </section>
             <div className="header-card flex flex-col justify-center items-center font-medium text-3xl mb-4">
               <p className="font-light">Selamat Datang</p>

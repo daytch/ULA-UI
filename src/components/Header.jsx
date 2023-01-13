@@ -119,7 +119,7 @@ const Header = () => {
                 <img
                   className="h-7 w-7 inline-block rounded-full ring-2 ring-white dark:ring-gray-800"
                   src={User}
-                  alt="Image Description"
+                  alt="User Avatar"
                 />
               </button>
 

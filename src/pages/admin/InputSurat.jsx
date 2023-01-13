@@ -133,7 +133,7 @@ const InputSurat = () => {
   return (
     <div className="block p-6 rounded-lg shadow-lg bg-[#F3F4F6] lg:w-1/2">
       <div className="flex flex-row justify-center items-center border-b-[1px] border-black">
-        <img src={LogoImage} className="w-20 h-auto inline" />
+        <img src={LogoImage} className="w-20 h-auto inline" alt="logo" />
         <p className="header-card font-medium text-xl ml-4">
           Layanan Surat Pemkot Bitung
         </p>
