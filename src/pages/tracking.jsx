@@ -24,7 +24,7 @@ const Tracking = () => {
   };
   const trackings = useSelector((state) => state.Surat.tracking);
   const loading = useSelector((state) => state.Surat.loading);
-  console.log("trackings:", trackings);
+  
   const mappingWording = {
     A: "Submit surat pada admin Umum",
     B1: "Surat sedang direview pihak terkait (Walikota)",
