@@ -145,51 +145,6 @@ const Laporan = () => {
     setKeywords(keyword);
   };
 
-  // const handlePostAction = () => {
-  //   let payload = {
-  //     id: Number(detail.id), // id surat
-  //     destination: kepadaRef.current.value, // Admin Walikota
-  //     keterangan: keteranganRef.current.value,
-  //   };
-  //   dispatch(postActionSurat(payload));
-
-  //   window.open(
-  //     "https://wa.me/" +
-  //       detail.no_hp +
-  //       "/?text=" +
-  //       wording.tracking +
-  //       "" +
-  //       detail.id,
-  //     "_blank"
-  //   );
-  // };
-
-  const handleSendTandaTerima = () => {
-    let contentWA = "";
-    let ContentWording = wording.finished;
-    contentWA = ContentWording.replace(
-      "#url#",
-      detail.suratAttachment[0].lampiran
-    );
-    contentWA = ContentWording.replace("#admin_umum#", userData.email);
-    contentWA = ContentWording.replace("#no_surat#", detail.no_surat);
-    contentWA = ContentWording.replace("#tujuan#", detail.tujuan);
-    contentWA = ContentWording.replace(
-      "#tgl_kirim#",
-      convertDate(detail.createdAt)
-    );
-
-    window.open(
-      "https://wa.me/" +
-        (String(detail.no_hp).substring(0, 1) === "0"
-          ? Number("+62" + String(detail.no_hp).substring(1))
-          : detail.no_hp) +
-        "/?text=" +
-        contentWA,
-      "_blank"
-    );
-  };
-
   const handlePrintTandaTerima = () => {
     let contentWA = "";
     let ContentWording = wording.finished;
@@ -426,23 +381,6 @@ const Laporan = () => {
               </div>
             </div>
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
-              {/* <button
-                type="button"
-                onClick={handleSendTandaTerima}
-                className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-              >
-                <RocketLaunchIcon className="h-5 w-5" />
-                Send
-              </button>
-              <button
-                type="button"
-                data-hs-overlay="#hs-scroll-inside-body-modal"
-                onClick={handlePrintTandaTerima}
-                className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-              >
-                <PrinterIcon className="h-5 w-5" />
-                Print
-              </button> */}
               <button
                 type="button"
                 className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"

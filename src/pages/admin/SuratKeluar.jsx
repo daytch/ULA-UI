@@ -429,50 +429,73 @@ const SuratKeluar = () => {
       keterangan: "", // keteranganRef.current.value,
       lampiran: item.lampiran,
     };
-    let contentWA = "";
-    let ContentWording = wording.tracking;
+
+    let notif = "";
 
     if (role === "A") {
-      delete payload.lampiran;
-      contentWA = ContentWording.replace(
-        "#url#",
-        window.location.origin + "/tracking?no=" + item.no_surat
-      );
-      contentWA = ContentWording.replace("#admin_umum#", userData.email);
-      contentWA = ContentWording.replace("#no_surat#", item.no_surat);
-      contentWA = ContentWording.replace("#tujuan#", item.tujuan);
-      contentWA = ContentWording.replace(
-        "#tgl_kirim#",
-        convertDate(item.createdAt)
-      );
+      notif = `*TANDA TERIMA ELEKTRONIK %0a
+      UNIT LAYANAN ADMINISTRASI PEMERINTAHAN KOTA BITUNG %0a
+      HOTLINE WA : 0812333333333* %0a
+      %0a
+      %0a
+      Nomor Registrasi 		: ${item.no_surat} %0a
+      Tujuan 				: ${item.tujuan} %0a
+      Tanggal Penerimaan ULA 	${convertDate(item.createdAt)} %0a
+      ====================== %0a
+      JENIS PELAYANAN ULA 		: SURAT UNDANGAN/PERTEMUAN/DATA/REKOMENDASI %0a
+      ====================== %0a
+      Operator  	: ${userData.email} %0a
+      SCAN BARCODE %0a
+      ====================== %0a
+      %0a
+      Silahkan cek secara berkala  pada tautan di bawah ini untuk mengetahui proses dokumen anda : https://ula-bitung.vercel.app/tracking?no=${
+        item.no_surat
+      } %0a
+      #PemerintahanKotaBitung    #BitungMajudanSejahtera %0a
+      `;
     } else {
-      ContentWording = wording.finished;
-
-      contentWA = ContentWording.replace("#nik#", item.nik);
-      contentWA = ContentWording.replace("#no_surat#", item.no_surat);
-      contentWA = ContentWording.replace("#tujuan#", item.tujuan);
-      contentWA = ContentWording.replace(
-        "#tgl_terima#",
-        convertDate(item.createdAt)
-      );
-      contentWA = ContentWording.replace(
-        "#tgl_selesai#",
-        item.tgl_selesai ? convertDate(item.tgl_selesai) : "-"
-      );
-      contentWA = ContentWording.replace("#status#", mapStatus[item.status]);
-      contentWA = ContentWording.replace(
-        "#url#",
-        item.suratAttachment.length > 0 ? item.suratAttachment[0].lampiran : ""
-      );
+      notif = `*TANDA TERIMA ELEKTRONIK PENERIMAAN DOKUMEN %0a 
+        PEMERINTAHAN KOTA BITUNG*   %0a
+        %0a
+        Nomer Surat : %0a
+        ${item.no_surat} %0a
+        NIK : %0a
+        ${item.nik} %0a
+        %0a
+        Tujuan : %0a
+        ${item.tujuan} %0a
+        %0a
+        Terima : ${convertDate(item.createdAt)} %0a
+        Selesai : ${item.tgl_selesai ? convertDate(item.tgl_selesai) : "-"} %0a
+        %0a
+        ====================== %0a
+        JENIS SURAT : R/UR %0a
+        %0a
+        %0a
+        ====================== %0a
+        %0a
+        %0a
+        Status: Diterima %0a
+        %0a
+        Operator : ${userData.email} %0a
+        ====================== %0a
+        %0a
+        Syarat dan ketentuan: %0a
+        PERHATIAN : %0a
+        1. Pengambilan Dokumen harap disertai Tanda Terima Digital ( WA/SMS/Email) %0a
+        2. DOKUMEN yang tidak diambil selama 1 bulan, hilang / rusak tidak diganti %0a
+        3. Harap Melakukan Pengecekan Dokumen Secara Berkala %0a
+        %0a
+        %0a 
+        Terima Kasih %0a`;
     }
-
     window.open(
       "https://wa.me/" +
         (String(item.no_hp).substring(0, 1) === "0"
           ? Number("+62" + String(item.no_hp).substring(1))
           : item.no_hp) +
         "/?text=" +
-        contentWA,
+        notif,
       "_blank"
     );
   };

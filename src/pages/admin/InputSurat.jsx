@@ -42,10 +42,6 @@ const InputSurat = () => {
     { id: "B3", text: "Sekot" },
   ];
 
-  useEffect(() => {
-    console.log("error:", error);
-  }, [error]);
-
   const loading = useSelector((state) => state.Surat.loading);
   const message = useSelector((state) => state.Surat.message);
 
