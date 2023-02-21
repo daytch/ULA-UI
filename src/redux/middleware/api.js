@@ -5,7 +5,7 @@ var token = localStorage.getItem("token");
 
 let api = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 100000,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json;charset=utf-8",
